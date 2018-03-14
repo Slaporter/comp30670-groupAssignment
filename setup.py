@@ -29,4 +29,7 @@ setup(
         'Programming Language :: Python :: Implementation :: PyPy',
         'Topic :: Software Development',
     ],
+entry_points={
+          'console_scripts':['bikeMe=run:run_my_bike']
+          }
 )

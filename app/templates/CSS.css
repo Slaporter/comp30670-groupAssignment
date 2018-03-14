@@ -1,0 +1,11 @@
+body {
+    background-color: #3787A8;
+    font-family: calibri;
+}
+#style {
+    position: relative;
+}
+#map {
+    height: 600px;
+    padding-top: 1px;
+}

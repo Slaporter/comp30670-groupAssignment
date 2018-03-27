@@ -15,14 +15,14 @@ response = requests.get("https://api.jcdecaux.com/vls/v1/stations?contract=Dubli
 
 # Print the status code of the response.
 print(response)
-print(response.json())
+json_data=response.json()
+print("number of stops:", len(json_data))
 
 DB_NAME = 'dbbikes'
 
 TABLES = {}
 TABLES['static_data'] = (
     "CREATE TABLE `static_data` ("
-    "  `id` int(11) NOT NULL AUTO_INCREMENT,"
     "  `number` int(11) NOT NULL,"
     "  `contract_name` varchar(14) NOT NULL,"
     "  `name` varchar(16) NOT NULL,"
@@ -31,18 +31,18 @@ TABLES['static_data'] = (
     "  `lng` double NOT NULL,"
     "  `banking` varchar(14),"
     "  `bonus` varchar(14),"
-    "  PRIMARY KEY (`id`)"
+    "  PRIMARY KEY (`number`)"
     ") ENGINE=InnoDB")
 
 TABLES['dynamic_data'] = (
     "CREATE TABLE `dynamic_data` ("
-    "  `id` int(11) NOT NULL,"
+    "  `number` int(11) NOT NULL,"
     "  `status` enum('CLOSED','OPEN') NOT NULL,"
     "  `bike_stands` int(11) NOT NULL,"
     "  `available_bike_stands` int(11) NOT NULL,"
     "  `available_bikes` int(11) NOT NULL,"
-    "  `last_update` datetime NOT NULL,"
-    "  PRIMARY KEY (`id`)"
+    "  `last_update` bigint(20) NOT NULL,"
+    "  PRIMARY KEY (`number`,`last_update`)"
     ") ENGINE=InnoDB")
 
 cnx=mysql.connector.connect(user='dbikes', password='dublinbikes', host='dbikes.c8m1rhzxgoap.us-east-2.rds.amazonaws.com', database='dbikes', )
@@ -60,7 +60,27 @@ for name, ddl in TABLES.items():
     else:
         print("OK")
 
+add_static_data=("INSERT INTO static_data "
+                "(number, contract_name, name, address, lat, lng, banking, bonus)"
+                "VALUES (%s, %s, %s, %s, %s, %s, %s, %s)")
 
+add_dynamic_data=("INSERT INTO dynamic_data "
+                  "(number, status, bike_stands, available_bike_stands, available_bikes,last_update)"
+                  "VALUES(%s,%s,%s,%s,%s,%s)")
 
+cursor.execute("SELECT `number` from `static_data`")
+ids = [row[0] for row in cursor.fetchall()]
+cursor.execute("SELECT `number`, `last_update` from `dynamic_data`")
+d_ids = [row for row in cursor.fetchall()]
+
+for stop in json_data:
+    if stop['number'] not in ids:
+        values=(stop['number'], stop['contract_name'], stop['name'], stop['address'], stop['position']['lat'], stop['position']['lng'], stop['banking'], stop['bonus'])
+        cursor.execute(add_static_data, values)
+    if (stop['number'], stop['last_update']) not in d_ids:
+        dvalues=(stop['number'],stop['status'],stop['bike_stands'],stop['available_bike_stands'],stop['available_bikes'],stop['last_update'])
+        cursor.execute(add_dynamic_data, dvalues)
+
+cnx.commit()
 cursor.close()
 cnx.close()

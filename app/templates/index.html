@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1" name="viewport">
     <title>Dublin Bikes</title>
+
 </head>
 
 <body>
@@ -12,11 +13,37 @@
     <header>
     </header>
 
-    <script src="{{url_for('static', filename='Java/JS.js')}}"></script>
-
+    <!-- <script src="{{url_for('static', filename='Java/JS.js')}}"></script> -->
+    <script> 
+    
+    function myMap() {
+    	 
+        var myLongitude = {
+            lat: 53.3498,
+            lng: -6.2603
+        };
+        
+        
+        var map = new google.maps.Map(document.getElementById("map"), {
+            center: myLongitude,
+            zoom: 14
+        });
+        {% for stop in stops %}
+        var marker = new google.maps.Marker({
+            position: new google.maps.LatLng({{ stop[0] }}, {{ stop[1] }})
+           
+        });
+        
+        marker.setMap(map);
+        {% endfor %}
+        }
+    
+    </script>
+	
     <!--  https://www.w3schools.com/graphics/google_maps_basic.asp  -->
     <div id="map">Unable to connect, please refresh</div>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBU1JvWkSvhDQ_HuTNOfF9h7QMehuLRWmA&callback=myMap"></script>
+    
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBU1JvWkSvhDQ_HuTNOfF9h7QMehuLRWmA&callback=myMap"> </script>
     
     </body>
 </html>

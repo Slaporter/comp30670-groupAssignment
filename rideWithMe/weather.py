@@ -50,7 +50,7 @@ for name, ddl in TABLES.items():
 
 insert_weather_data1 = ( "INSERT INTO weather_data1 "
                         "(id, temp, humidity, clouds, wind)"
-                       "VALUES(%d,%d,%d,%d,%d,%d)")
+                       "VALUES(%s,%s,%s,%s,%s,%s)")
 
 cursor.execute("SELECT `id` from `weather_data1`")
 ids = [row[0] for row in cursor.fetchall()]

@@ -16,3 +16,9 @@ def index():
     returnDict = {}
     returnDict['stops']=stops
     return render_template("index.html",**returnDict)
+
+
+@app.route('/weather')
+def weather():
+    returnDict = {}
+    return render_template("weather.html",**returnDict)

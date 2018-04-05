@@ -59,19 +59,26 @@
           });
         
         {% for stop in stops %}
+        
         var marker = new google.maps.Marker({
-            position: new google.maps.LatLng({{ stop[0] }}, {{ stop[1] }})
+            position: new google.maps.LatLng({{ stop[0] }}, {{ stop[1] }}),
         	
         });
+        
+        
+        attachMessage(marker, ({{ stop[0] }}));
+        }
+        
+        function attachMessage(marker, Message) {
         var infowindow = new google.maps.InfoWindow({
-            content: "Hello"
+            content: '({{ stop[0] }})',
           });
    
         marker.addListener('click', function() {
-            infowindow.open(map, marker);
+            infowindow.open(marker.getMap(map), marker);
           });
         
-        marker.setMap(map);
+        marker.setMap();
         
 
         {% endfor %}

@@ -36,7 +36,7 @@
     			infoWindow.setPosition(pos);
     			infoWindow.setContent('Found you!');
     			infoWindow.open(map);
-    			map.setCenter(pos);
+    			map.setCenter(myLongitude);
     		}, function() {
     			handleLocationError(true, infoWindow, map.getCenter());
     		});
@@ -50,13 +50,30 @@
             center: myLongitude,
             zoom: 13
         });
+        var contentString = '<div id="content">'+
+        '<div id="siteNotice">'+
+        '</div>';
+        
+         var infowindow = new google.maps.InfoWindow({
+            content: contentString
+          });
+        
         {% for stop in stops %}
         var marker = new google.maps.Marker({
             position: new google.maps.LatLng({{ stop[0] }}, {{ stop[1] }})
-           
+        	
         });
+        var infowindow = new google.maps.InfoWindow({
+            content: "Hello"
+          });
+   
+        marker.addListener('click', function() {
+            infowindow.open(map, marker);
+          });
         
         marker.setMap(map);
+        
+
         {% endfor %}
         }
     

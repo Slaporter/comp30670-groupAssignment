@@ -39,6 +39,10 @@ TABLES['weather_data1'] = (
 def run():
     while True:
         try:
+            api_url="http://api.openweathermap.org/data/2.5/weather?APPID=52b3fcc8ca94382baa1747a7dde59108&q=Dublin"
+
+
+            response = requests.get(api_url)
             cnx=mysql.connector.connect(user='dbikes', password='dublinbikes', host='dbikes.c8m1rhzxgoap.us-east-2.rds.amazonaws.com', database='dbikes', )
 
             cursor=cnx.cursor()

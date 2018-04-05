@@ -3,12 +3,14 @@ Created on 14 Mar 2018
 
 @author: Slaporter
 '''
+print("preimports")
 import requests
 import json
+print("Import pre mysql")
 import mysql.connector
 from mysql.connector import errorcode
 import time
-
+print("all imports")
 api_key = '9057d925a716282b0a6b224cc84b50a713c22a7e'
 api_url="https://api.jcdecaux.com/vls/v1/stations"
 response = requests.get("https://api.jcdecaux.com/vls/v1/stations?contract=Dublin&apiKey="+api_key)
@@ -47,6 +49,11 @@ TABLES['dynamic_data'] = (
 def run():
     while True:
         try:
+            api_key = '9057d925a716282b0a6b224cc84b50a713c22a7e'
+            api_url="https://api.jcdecaux.com/vls/v1/stations"
+            response = requests.get("https://api.jcdecaux.com/vls/v1/stations?contract=Dublin&apiKey="+api_key)
+            json_data=response.json()
+
             cnx=mysql.connector.connect(user='dbikes', password='dublinbikes', host='dbikes.c8m1rhzxgoap.us-east-2.rds.amazonaws.com', database='dbikes', )
             cursor=cnx.cursor()
             
@@ -74,15 +81,17 @@ def run():
             ids = [row[0] for row in cursor.fetchall()]
             cursor.execute("SELECT `number`, `last_update` from `dynamic_data`")
             d_ids = [row for row in cursor.fetchall()]
-            
+            print("before for loop")
+            print(json_data)
             for stop in json_data:
                 if stop['number'] not in ids:
                     values=(stop['number'], stop['contract_name'], stop['name'], stop['address'], stop['position']['lat'], stop['position']['lng'], stop['banking'], stop['bonus'])
                     cursor.execute(add_static_data, values)
                 if (stop['number'], stop['last_update']) not in d_ids:
+                    print("in dynamic if")
                     dvalues=(stop['number'],stop['status'],stop['bike_stands'],stop['available_bike_stands'],stop['available_bikes'],stop['last_update'])
                     cursor.execute(add_dynamic_data, dvalues)
-            
+            print("reached past for loop")
             cnx.commit()
             cursor.close()
             cnx.close()

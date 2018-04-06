@@ -76,6 +76,7 @@ def run():
             print('id9', id9)         
             
             if id9 not in entries:
+                print("I am in if state")
                 data_weather1 = (id9, temp , info['main'], info['description'], clouds['all'], humidity, wind['speed'], info['icon']) 
                 cursor.execute(insert_weather_data1, data_weather1)
 

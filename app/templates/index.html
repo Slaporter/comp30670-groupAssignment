@@ -35,7 +35,6 @@
     			};
     			infoWindow.setPosition(pos);
     			infoWindow.setContent('Found you!');
-    			infoWindow.open(map);
     			map.setCenter(myLongitude);
     		}, function() {
     			handleLocationError(true, infoWindow, map.getCenter());
@@ -50,35 +49,26 @@
             center: myLongitude,
             zoom: 13
         });
-        var contentString = '<div id="content">'+
-        '<div id="siteNotice">'+
-        '</div>';
         
-         var infowindow = new google.maps.InfoWindow({
-            content: contentString
-          });
+        function showstationMarkers(){
+        		var stations= ('hello');
+        		console.log('stations', stations);
+        	}
         
+
         {% for stop in stops %}
-        
+   
         var marker = new google.maps.Marker({
             position: new google.maps.LatLng({{ stop[0] }}, {{ stop[1] }}),
-        	
+        map:map,
+        title: '{{ stop[2] }}',
+        //station_number :station.number
         });
         
         
-        attachMessage(marker, ({{ stop[0] }}));
-        }
-        
-        function attachMessage(marker, Message) {
-        var infowindow = new google.maps.InfoWindow({
-            content: '({{ stop[0] }})',
-          });
-   
-        marker.addListener('click', function() {
-            infowindow.open(marker.getMap(map), marker);
-          });
-        
-        marker.setMap();
+      
+       
+        marker.setMap(map);
         
 
         {% endfor %}

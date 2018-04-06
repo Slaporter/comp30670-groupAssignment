@@ -46,6 +46,22 @@ TABLES['dynamic_data'] = (
     "  `last_update` bigint(20) NOT NULL,"
     "  PRIMARY KEY (`number`,`last_update`)"
     ") ENGINE=InnoDB")
+
+TABLES['current_data'] = (
+    "CREATE TABLE `current_data` ("
+    "  `number` int(11) NOT NULL,"
+    "  `name` varchar(16) NOT NULL,"
+    "  `lat` double NOT NULL,"
+    "  `lng` double NOT NULL,"
+    "  `status` enum('CLOSED','OPEN') NOT NULL,"
+    "  `bike_stands` int(11) NOT NULL,"
+    "  `available_bike_stands` int(11) NOT NULL,"
+    "  `available_bikes` int(11) NOT NULL,"
+    "  `last_update` bigint(20) NOT NULL,"
+    "  PRIMARY KEY (`number`)"
+    ") ENGINE=InnoDB")
+
+
 def run():
     while True:
         try:
@@ -69,6 +85,8 @@ def run():
                 else:
                     print("OK")
             
+            print("reached")
+            
             add_static_data=("INSERT INTO static_data "
                             "(number, contract_name, name, address, lat, lng, banking, bonus)"
                             "VALUES (%s, %s, %s, %s, %s, %s, %s, %s)")
@@ -77,10 +95,22 @@ def run():
                               "(number, status, bike_stands, available_bike_stands, available_bikes,last_update)"
                               "VALUES(%s,%s,%s,%s,%s,%s)")
             
+            add_current_data=("INSERT INTO current_data "
+                              "(number, name, lat, lng, status, bike_stands, available_bike_stands, available_bikes, last_update)"
+                              "VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s)")
+            
+            replace_current_data=("REPLACE INTO current_data "
+                                  "(number, name, lat, lng, status, bike_stands, available_bike_stands, available_bikes, last_update)"
+                                  "VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s)")
+            
+            print("and here")
+            
             cursor.execute("SELECT `number` from `static_data`")
             ids = [row[0] for row in cursor.fetchall()]
             cursor.execute("SELECT `number`, `last_update` from `dynamic_data`")
             d_ids = [row for row in cursor.fetchall()]
+            cursor.execute("SELECT `number` from `current_data`")
+            c_ids = [row[0] for row in cursor.fetchall()]
             print("before for loop")
             print(json_data)
             for stop in json_data:
@@ -91,6 +121,15 @@ def run():
                     print("in dynamic if")
                     dvalues=(stop['number'],stop['status'],stop['bike_stands'],stop['available_bike_stands'],stop['available_bikes'],stop['last_update'])
                     cursor.execute(add_dynamic_data, dvalues)
+                print("out of dd")
+                if stop['number'] not in c_ids:
+                    print("in create")
+                    cvalues=(stop['number'],stop['name'], stop['position']['lat'], stop['position']['lng'], stop['status'], stop['bike_stands'], stop['available_bike_stands'], stop['available_bikes'], stop['last_update'])
+                    cursor.execute(add_current_data, cvalues)
+                if stop['number'] in c_ids:
+                    rvalues=(stop['number'], stop['name'], stop['position']['lat'], stop['position']['lng'], stop['status'], stop['bike_stands'], stop['available_bike_stands'], stop['available_bikes'], stop['last_update'])
+                    cursor.execute(replace_current_data, rvalues)                   
+
             print("reached past for loop")
             cnx.commit()
             cursor.close()

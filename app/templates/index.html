@@ -22,27 +22,27 @@
             lat: 53.3498,
             lng: -6.2603
         };
-        
+       
         //map = new google.maps.Map(mapCanvas, mapOptions);
-    	infoWindow = new google.maps.InfoWindow;
+  //  	infoWindow = new google.maps.InfoWindow;
     	// Try HTML5 geolocation.
-
-    	if (navigator.geolocation) {
-    		navigator.geolocation.getCurrentPosition(function(position) {
-    			var pos = {
-    				lat: position.coords.latitude,
-    				lng: position.coords.longitude
-    			};
-    			infoWindow.setPosition(pos);
-    			infoWindow.setContent('Found you!');
-    			map.setCenter(myLongitude);
-    		}, function() {
-    			handleLocationError(true, infoWindow, map.getCenter());
-    		});
-    	} else {
+//
+  //  	if (navigator.geolocation) {
+    //		navigator.geolocation.getCurrentPosition(function(position) {
+    	//		var pos = {
+    		//		lat: position.coords.latitude,
+    			//	lng: position.coords.longitude
+    		//	};
+   // 			infoWindow.setPosition(pos);
+    //			infoWindow.setContent('Found you!');
+    	//		map.setCenter(myLongitude);
+   // 		}, function() {
+    //			handleLocationError(true, infoWindow, map.getCenter());
+    	//	});
+    //	} else {
     		// Browser doesn't support Geolocation
-    		handleLocationError(false, infoWindow, map.getCenter());
-    	}
+    	//	handleLocationError(false, infoWindow, map.getCenter());
+    	//}
         
         
         var map = new google.maps.Map(document.getElementById("map"), {
@@ -53,17 +53,37 @@
 
 
         {% for stop in stops %}
+        
+    	var name = 'Name: {{ stop[2] }} Status: {{ stop[3]}} Available bike stands: {{ stop[4]}} Available bikes: {{ stop[5] }}';
+        	
+        	var infoWindow = new google.maps.InfoWindow();
+
    
         var marker = new google.maps.Marker({
             position: new google.maps.LatLng({{ stop[0] }}, {{ stop[1] }}),
-        map:map,
-        title: 'Name: {{ stop[2] }} Status: {{ stop[3]}} Available bike stands: {{ stop[4]}} Available bikes: {{ stop[5] }}',
-        //station_number :station.number
         });
         
-        
-      
+        marker.content='Name: {{ stop[2] }} Status: {{ stop[3]}} Available bike stands: {{ stop[4]}} Available bikes: {{ stop[5] }}',
+
        
+        google.maps.event.addListener(marker, 'click', function() {
+            if(!marker.open){
+            	infoWindow.setContent(this.content);
+                infoWindow.open(this.getMap(), this);
+                marker.open = true;
+            }
+            else{
+            	infoWindow.setContent(this.content);
+                infoWindow.close(this.getMap(), this);
+                marker.open = false;
+            }
+            google.maps.event.addListener(map, 'click', function() {
+            	infoWindow.setContent(this.content);
+                infoWindow.close(this.getMap(), this);
+                marker.open = false;
+            });
+        });
+        
         marker.setMap(map);
         
 
@@ -76,6 +96,5 @@
     <div id="map">Unable to connect, please refresh</div>
     
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBU1JvWkSvhDQ_HuTNOfF9h7QMehuLRWmA&callback=myMap"> </script>
-    
     </body>
 </html>

@@ -63,7 +63,7 @@
             position: new google.maps.LatLng({{ stop[0] }}, {{ stop[1] }}),
         });
         
-        marker.content='Name: {{ stop[2] }} Status: {{ stop[3]}} Available bike stands: {{ stop[4]}} Available bikes: {{ stop[5] }}',
+        marker.content="<div class='h1'><p> Name: {{ stop[2] }}</p> Status: {{ stop[3]}} <p>Available bike stands: {{ stop[4]}}</p><p> Available bikes: {{ stop[5] }}</p> </div>",
 
        
         google.maps.event.addListener(marker, 'click', function() {
@@ -77,9 +77,9 @@
                 infoWindow.close(this.getMap(), this);
                 marker.open = false;
             }
-            google.maps.event.addListener(map, 'click', function() {
+         google.maps.event.addListener(map, 'click', function() {
             	infoWindow.setContent(this.content);
-                infoWindow.close(this.getMap(), this);
+                infoWindow.close(map, marker);
                 marker.open = false;
             });
         });

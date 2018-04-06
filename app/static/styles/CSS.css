@@ -9,3 +9,10 @@ body {
     height: 600px;
     padding-top: 1px;
 }
+
+.h1 {
+    font-size: 12px;
+    text-align: left;
+    line-height: 1;
+    font-weight:bold;
+}

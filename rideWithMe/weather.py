@@ -4,6 +4,7 @@ import json
 import mysql.connector
 from mysql.connector import errorcode
 import time
+import datetime
 
 
 
@@ -32,6 +33,7 @@ TABLES['weather_data1'] = (
     "  `humidity` float(11) NOT NULL,"
     "  `wind` float(11) NOT NULL,"
     "  `icon` varchar(16) NOT NULL,"
+    "  `date_time` datetime() NOT NULL,"
     "  PRIMARY KEY (`id`)"
     
     ")ENGINE=InnoDB")
@@ -60,7 +62,9 @@ def run():
 
             insert_weather_data1 = ( "INSERT INTO weather_data1 "
                                     "(id, temp, main, description, clouds, humidity, wind, icon)"
-                                   "VALUES(%s, %s, %s, %s, %s, %s, %s, %s)")
+                                   "VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s)")
+            
+
 
 
 
@@ -73,10 +77,18 @@ def run():
             clouds = json_data['clouds']
             humidity = json_data['main']['humidity']
             id9 = info['id']
-            print('id9', id9)         
+            
+            
+            ts = time.time()
+            print(ts)
+            print('id9', id9) 
+            
+            date_time = datetime.datetime.fromtimestamp(int(ts)).strftime('%Y-%m-%d %H:%M:%S')
+            
+            print(date_time)
             
             if id9 not in entries:
-                data_weather1 = (id9, temp , info['main'], info['description'], clouds['all'], humidity, wind['speed'], info['icon']) 
+                data_weather1 = (id9, temp , info['main'], info['description'], clouds['all'], humidity, wind['speed'], info['icon'], date_time) 
                 cursor.execute(insert_weather_data1, data_weather1)
 
             cnx.commit()

@@ -88,7 +88,12 @@ def run():
             print(date_time)
             
             if id9 not in entries:
+<<<<<<< HEAD
                 data_weather1 = (id9, temp , info['main'], info['description'], clouds['all'], humidity, wind['speed'], info['icon'], date_time) 
+=======
+                print("I am in if state")
+                data_weather1 = (id9, temp , info['main'], info['description'], clouds['all'], humidity, wind['speed'], info['icon']) 
+>>>>>>> 5c1bbc427a215416841d657fd0cceb61e89e8407
                 cursor.execute(insert_weather_data1, data_weather1)
 
             cnx.commit()

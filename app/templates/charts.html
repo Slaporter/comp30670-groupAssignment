@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <title>Dublin Bikes</title>
+
+</head>
+
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/CSS.css') }}">
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+google.charts.load('current', {'packages':['corechart']});
+google.charts.setOnLoadCallback(drawChart);
+
+{% for info in infos %}
+function drawChart() {
+	  var data = google.visualization.arrayToDataTable([
+	  ['Bikes', 'Data'],
+	  ['Available bike stands', {{ info[4]}}],
+	  ['Available bikes', {{ info[5] }}]
+	]);
+	  
+	  // Optional; add a title and set the width and height of the chart
+	  var options = {'title':'{{ info[2] }}', 'width':350, 'height':250};
+
+	  // Display the chart inside the <div> element with id="piechart"
+	  var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+	  chart.draw(data, options);
+	  
+}
+{% endfor %}
+</script>
+ </head>
+
+  <body>
+  
+    <div id="piechart"></div>
+  </body>
+</html>

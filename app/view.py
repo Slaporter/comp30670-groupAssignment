@@ -11,7 +11,7 @@ import mysql.connector
 def index():
     con=mysql.connector.connect(user='dbikes', password='dublinbikes', host='dbikes.c8m1rhzxgoap.us-east-2.rds.amazonaws.com', database='dbikes', )
     cursor=con.cursor()
-    cursor.execute("SELECT `lat`, `lng`, `name`, `status`, `available_bike_stands`, `available_bikes` from `current_data`")
+    cursor.execute("SELECT `lat`, `lng`, `name`, `status`, `available_bike_stands`, `available_bikes`, `last_update` from `current_data`")
     stops=cursor.fetchall()
     returnDict = {}
     returnDict['stops']=stops

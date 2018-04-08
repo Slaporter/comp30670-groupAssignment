@@ -10,6 +10,8 @@ print("Import pre mysql")
 import mysql.connector
 from mysql.connector import errorcode
 import time
+import datetime
+
 print("all imports")
 api_key = '9057d925a716282b0a6b224cc84b50a713c22a7e'
 api_url="https://api.jcdecaux.com/vls/v1/stations"
@@ -57,7 +59,7 @@ TABLES['current_data'] = (
     "  `bike_stands` int(11) NOT NULL,"
     "  `available_bike_stands` int(11) NOT NULL,"
     "  `available_bikes` int(11) NOT NULL,"
-    "  `last_update` bigint(20) NOT NULL,"
+    "  `last_update` varchar(16) NOT NULL,"
     "  PRIMARY KEY (`number`)"
     ") ENGINE=InnoDB")
 
@@ -103,6 +105,8 @@ def run():
                                   "(number, name, lat, lng, status, bike_stands, available_bike_stands, available_bikes, last_update)"
                                   "VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s)")
             
+            
+            
             print("and here")
             
             cursor.execute("SELECT `number` from `static_data`")
@@ -112,8 +116,14 @@ def run():
             cursor.execute("SELECT `number` from `current_data`")
             c_ids = [row[0] for row in cursor.fetchall()]
             print("before for loop")
+            
+
+            
             print(json_data)
             for stop in json_data:
+                s=stop['last_update']/1000
+                last_update=datetime.datetime.fromtimestamp(s).strftime("%Y-%m-%d %H:%M:%S")
+                print(last_update)
                 if stop['number'] not in ids:
                     values=(stop['number'], stop['contract_name'], stop['name'], stop['address'], stop['position']['lat'], stop['position']['lng'], stop['banking'], stop['bonus'])
                     cursor.execute(add_static_data, values)
@@ -124,10 +134,10 @@ def run():
                 print("out of dd")
                 if stop['number'] not in c_ids:
                     print("in create")
-                    cvalues=(stop['number'],stop['name'], stop['position']['lat'], stop['position']['lng'], stop['status'], stop['bike_stands'], stop['available_bike_stands'], stop['available_bikes'], stop['last_update'])
+                    cvalues=(stop['number'],stop['name'], stop['position']['lat'], stop['position']['lng'], stop['status'], stop['bike_stands'], stop['available_bike_stands'], stop['available_bikes'], last_update)
                     cursor.execute(add_current_data, cvalues)
                 if stop['number'] in c_ids:
-                    rvalues=(stop['number'], stop['name'], stop['position']['lat'], stop['position']['lng'], stop['status'], stop['bike_stands'], stop['available_bike_stands'], stop['available_bikes'], stop['last_update'])
+                    rvalues=(stop['number'], stop['name'], stop['position']['lat'], stop['position']['lng'], stop['status'], stop['bike_stands'], stop['available_bike_stands'], stop['available_bikes'], last_update)
                     cursor.execute(replace_current_data, rvalues)                   
 
             print("reached past for loop")

@@ -63,7 +63,7 @@
             position: new google.maps.LatLng({{ stop[0] }}, {{ stop[1] }}),
         });
         
-        marker.content="<div class='h1'><p> Name: {{ stop[2] }}</p> Status: {{ stop[3]}} <p>Available bike stands: {{ stop[4]}}</p><p> Available bikes: {{ stop[5] }}</p> </div>",
+        marker.content="<div class='h1'><p> Name: {{ stop[2] }}</p> Status: {{ stop[3]}} <p>Available bike stands: {{ stop[4]}}</p><p> Available bikes: {{ stop[5] }}</p><p> Last Updated: {{ stop[6] }}</p> </div>",
 
        
         google.maps.event.addListener(marker, 'click', function() {

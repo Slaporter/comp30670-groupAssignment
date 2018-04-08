@@ -22,9 +22,8 @@ DB_NAME = 'dbbikes'
 
 TABLES = {}
 
-TABLES['weather_data1'] = (
-    
-    "CREATE TABLE `weather_data1` ("
+TABLES['weather_data2'] = (
+    "CREATE TABLE `weather_data2` ("
     "  `id` int(11) NOT NULL,"
     "  `temp` int(11) NOT NULL,"
     "  `main` varchar(16) NOT NULL,"    
@@ -33,10 +32,9 @@ TABLES['weather_data1'] = (
     "  `humidity` float(11) NOT NULL,"
     "  `wind` float(11) NOT NULL,"
     "  `icon` varchar(16) NOT NULL,"
-    "  `date_time` datetime() NOT NULL,"
+    "  `date_time` datetime NOT NULL,"
     "  PRIMARY KEY (`id`)"
-    
-    ")ENGINE=InnoDB")
+    ") ENGINE=InnoDB")
 
 def run():
     while True:
@@ -60,16 +58,17 @@ def run():
                 else:
                     print("OK")
 
-            insert_weather_data1 = ( "INSERT INTO weather_data1 "
-                                    "(id, temp, main, description, clouds, humidity, wind, icon)"
+            insert_weather_data2 = ( "INSERT INTO weather_data2 "
+                                    "(id, temp, main, description, clouds, humidity, wind, icon, date_time)"
                                    "VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s)")
             
 
 
 
 
-            cursor.execute("SELECT `id` from `weather_data1`")
-            entries = [row[0] for row in cursor.fetchall()]
+            cursor.execute("SELECT `id` from `weather_data2`")
+            entries = [row[0] for
+                        row in cursor.fetchall()]
             print('entries are', entries)
             info = json_data['weather'][0]
             temp = json_data['main']['temp']
@@ -88,13 +87,9 @@ def run():
             print(date_time)
             
             if id9 not in entries:
-<<<<<<< HEAD
-                data_weather1 = (id9, temp , info['main'], info['description'], clouds['all'], humidity, wind['speed'], info['icon'], date_time) 
-=======
-                print("I am in if state")
-                data_weather1 = (id9, temp , info['main'], info['description'], clouds['all'], humidity, wind['speed'], info['icon']) 
->>>>>>> 5c1bbc427a215416841d657fd0cceb61e89e8407
-                cursor.execute(insert_weather_data1, data_weather1)
+                print("in if")
+                data_weather2 = (id9, temp , info['main'], info['description'], clouds['all'], humidity, wind['speed'], info['icon'], date_time) 
+                cursor.execute(insert_weather_data2, data_weather2)
 
             cnx.commit()
             cursor.close()

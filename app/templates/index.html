@@ -18,16 +18,25 @@
     
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
-
-    google.charts.load('current', {'packages':['corechart']});
-    google.charts.setOnLoadCallback(myMap.drawChart);  
+    
     
     function myMap() {
     	 
-        var myLongitude = {
+       var myLongitude = {
             lat: 53.3498,
             lng: -6.2603
         };
+    
+    var map = new google.maps.Map(document.getElementById("map"), {
+        center: myLongitude,
+        zoom: 13
+    });
+
+    google.charts.load('current', {'packages':['corechart']});
+    //google.charts.setOnLoadCallback(drawChart);  
+    
+
+  
        
         //map = new google.maps.Map(mapCanvas, mapOptions);
   //  	infoWindow = new google.maps.InfoWindow;
@@ -51,10 +60,7 @@
     	//}
         
         
-        var map = new google.maps.Map(document.getElementById("map"), {
-            center: myLongitude,
-            zoom: 13
-        });
+
         
 
 
@@ -62,52 +68,57 @@
         
     	var name = 'Name: {{ stop[2] }} Status: {{ stop[3]}} Available bike stands: {{ stop[4]}} Available bikes: {{ stop[5] }}';
         	
-        var infoWindow = new google.maps.InfoWindow();
+        var infoWindow = new google.maps.InfoWindow({
+            content: ''
+        });
 
    
         var marker = new google.maps.Marker({
             position: new google.maps.LatLng({{ stop[0] }}, {{ stop[1] }}),
         });
         
-        marker.content="<div class='h1'><p> Name: {{ stop[2] }}</p> Status: {{ stop[3]}} <p>Available bike stands: {{ stop[4]}}</p><p> Available bikes: {{ stop[5] }}</p><p> Last Updated: {{ stop[6] }}</p> </div>"+"<div id='pieChart'></div>",
+        
+       marker.content= " Status: {{ stop[3]}},      Last Updated: {{stop[6]}}",
+       
 
+        
        
         google.maps.event.addListener(marker, 'click', function() {
-            if(!marker.open){
-            	infoWindow.setContent(this.content);
-                infoWindow.open(this.getMap(), this);
-                marker.open = true;
+            if(!marker.open){   
+            	var data = google.visualization.arrayToDataTable([
+              	  ['Bikes', 'Data'],
+              	  ['Available bike stands', {{ stop[4]}}],
+              	  ['Available bikes', {{ stop[5] }}]
+              	]);
+              	  
+              	  var options = {'title':'{{ stop[2] }}' + this.content
+                          };
+
+                  var node = document.createElement('div'),
+                  infoWindow = new google.maps.InfoWindow(),
+                  chart = new google.visualization.PieChart(node);
+
+                  chart.draw(data, options);
+                  infoWindow.setContent(node);
+                  infoWindow.open(this.getMap(),this);
+                  marker.open = true;
             }
             else{
-            	infoWindow.setContent(this.content);
-                infoWindow.close(this.getMap(), this);
-                marker.open = false;
-            }
+
+            	  infoWindow.close();
+            
+            	}
          google.maps.event.addListener(map, 'click', function() {
-            	infoWindow.setContent(this.content);
                 infoWindow.close(map, marker);
-                marker.open = false;
-            });
+               marker.open = false;
+           });
         });
-        
+       
         marker.setMap(map);
-
-        function drawChart() {
-        	  var data = google.visualization.arrayToDataTable([
-        	  ['Bikes', 'Data'],
-        	  ['Available bike stands', {{ stop[4] }}],
-        	  ['Available bikes', {{ stop[5] }}]
-        	]);
-        	  
-        	  // Optional; add a title and set the width and height of the chart
-        	  var options = {'title':'{{ stop[2] }}', 'width':30, 'height':20};
-
-        	  // Display the chart inside the <div> element with id="piechart"
-        	  var chart = new google.visualization.PieChart(document.getElementById('pieChart'));
-        	  chart.draw(data, options);}
         
-        myMap.drawChart=drawChart;
-        
+
+       
+          
         {% endfor %}}
     
 
@@ -116,7 +127,7 @@
 	
     <!--  https://www.w3schools.com/graphics/google_maps_basic.asp  -->
     <div id="map">Unable to connect, please refresh</div>
-    <div id = "pieChart"></div>
+   
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBU1JvWkSvhDQ_HuTNOfF9h7QMehuLRWmA&callback=myMap"> </script>
     </body>
 </html>

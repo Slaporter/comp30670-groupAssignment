@@ -33,7 +33,7 @@ TABLES['weather_data2'] = (
     "  `wind` float(11) NOT NULL,"
     "  `icon` varchar(16) NOT NULL,"
     "  `date_time` datetime NOT NULL,"
-    "  PRIMARY KEY (`id`)"
+    "  PRIMARY KEY (`date_time`)"
     ") ENGINE=InnoDB")
 
 def run():
@@ -86,7 +86,7 @@ def run():
             
             print(date_time)
             
-            if id9 not in entries:
+            if date_time not in entries:
                 print("in if")
                 data_weather2 = (id9, temp , info['main'], info['description'], clouds['all'], humidity, wind['speed'], info['icon'], date_time) 
                 cursor.execute(insert_weather_data2, data_weather2)

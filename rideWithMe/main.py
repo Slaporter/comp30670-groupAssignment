@@ -145,7 +145,7 @@ def run():
             cursor.close()
             cnx.close()
             
-            time.sleep(5*60)
+            time.sleep(60)
 
         except:
             print("Error connecting to database")

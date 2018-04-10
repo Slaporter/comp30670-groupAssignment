@@ -91,7 +91,7 @@
               	  ['Available bikes', {{ stop[5] }}]
               	]);
               	  
-              	  var options = {'title':'{{ stop[2] }}' + this.content
+              	  var options = {'title':'{{ stop[2] }}', pieHole:0.4
                           };
 
                   var node = document.createElement('div'),
@@ -126,7 +126,13 @@
     </script>
 	
     <!--  https://www.w3schools.com/graphics/google_maps_basic.asp  -->
+    <div class="container">
+    <img src = "{{ url_for('static',filename='Images/JustEatBikes.jpg') }}" alt="JustEat Bikes">
+   
+    <input type="button" value="Hello" class="btn" onClick="document.getElementById('map').scrollIntoView();" />
+   </div>
     <div id="map">Unable to connect, please refresh</div>
+   <img id="footer" src = "{{ url_for('static',filename='Images/footer.svg') }}" alt="Footer"> 
    
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBU1JvWkSvhDQ_HuTNOfF9h7QMehuLRWmA&callback=myMap"> </script>
     </body>

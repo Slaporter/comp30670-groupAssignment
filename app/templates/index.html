@@ -60,67 +60,94 @@
     	//}
         
         
-
+		mapMarkers=[];
         
-
-
-        {% for stop in stops %}
-        
-    	var name = 'Name: {{ stop[2] }} Status: {{ stop[3]}} Available bike stands: {{ stop[4]}} Available bikes: {{ stop[5] }}';
-        	
-        var infoWindow = new google.maps.InfoWindow({
-            content: ''
-        });
-
-   
-        var marker = new google.maps.Marker({
-            position: new google.maps.LatLng({{ stop[0] }}, {{ stop[1] }}),
-        });
-        
-        
-       marker.content= " Status: {{ stop[3]}},      Last Updated: {{stop[6]}}",
-       
-
-        
-       
-        google.maps.event.addListener(marker, 'click', function() {
-            if(!marker.open){   
-            	var data = google.visualization.arrayToDataTable([
-              	  ['Bikes', 'Data'],
-              	  ['Available bike stands', {{ stop[4]}}],
-              	  ['Available bikes', {{ stop[5] }}]
-              	]);
-              	  
-              	  var options = {'title':'{{ stop[2] }}', pieHole:0.4
-                          };
-
-                  var node = document.createElement('div'),
-                  infoWindow = new google.maps.InfoWindow(),
-                  chart = new google.visualization.PieChart(node);
-
-                  chart.draw(data, options);
-                  infoWindow.setContent(node);
-                  infoWindow.open(this.getMap(),this);
-                  marker.open = true;
-            }
-            else{
-
-            	  infoWindow.close();
-            
-            	}
-         google.maps.event.addListener(map, 'click', function() {
-                infoWindow.close(map, marker);
-               marker.open = false;
-           });
-        });
-       
-        marker.setMap(map);
-        
-
-       
-          
-        {% endfor %}}
+		function setMarkers(view){
+			
+			for(i=0; i<mapMarkers.length; i++){
+				mapMarkers[i].setMap(null);
+			}
+			mapMarkers=[];
+	        
+			{% for stop in stops %}
+	        
+	    	var name = 'Name: {{ stop[2] }} Status: {{ stop[3]}} Available bike stands: {{ stop[4]}} Available bikes: {{ stop[5] }}';
+	        	
+	        var infoWindow = new google.maps.InfoWindow({
+	            content: ''
+	        });
+	        
+	        
+	        if (view==0){
+	        	if ({{ stop[4] }} == 0){
+	        		markerColour = "red";
+	        	} else if ({{ stop[4] }}/({{stop [5] }} + {{stop[4]}}) <0.9){
+	        		markerColour = "orange";
+	        	}else
+	        		markerColour = "green";
+	        }  
+	        else{
+	        	if ({{ stop[5] }} == 0){
+	        		markerColour="red";
+	        	} else if ({{ stop[5] }}/({{stop[4] }} + {{stop[5]}}) <0.9){
+	        		markerColour = "orange";
+	        	}else
+	        		markerColour="green";
+	        }
+	        var marker = new google.maps.Marker({
+	            position: new google.maps.LatLng({{ stop[0] }}, {{ stop[1] }}),
+	        });
+	        
+	       marker.setIcon('http://maps.google.com/mapfiles/ms/icons/'+markerColour+'-dot.png')
+	
+	       marker.content= " Status: {{ stop[3]}},      Last Updated: {{stop[6]}}",
+	       
+			
+	        
+	       
+	        google.maps.event.addListener(marker, 'click', function() {
+	            if(!marker.open){   
+	            	var data = google.visualization.arrayToDataTable([
+	              	  ['Bikes', 'Data'],
+	              	  ['Available bike stands', {{ stop[4]}}],
+	              	  ['Available bikes', {{ stop[5] }}]
+	              	]);
+	              	  
+	              	  var options = {'title':'{{ stop[2] }}', pieHole:0.4
+	                          };
+	
+	                  var node = document.createElement('div'),
+	                  infoWindow = new google.maps.InfoWindow(),
+	                  chart = new google.visualization.PieChart(node);
+	
+	                  chart.draw(data, options);
+	                  infoWindow.setContent(node);
+	                  infoWindow.open(this.getMap(),this);
+	                  marker.open = true;
+	            }
+	            else{
+	
+	            	  infoWindow.close();
+	            
+	            	}
+	         google.maps.event.addListener(map, 'click', function() {
+	                infoWindow.close(map, marker);
+	               marker.open = false;
+	           });
+	        });
+	       
+	        marker.setMap(map);
+	        mapMarkers.push(marker);
+	
+	       
+	          
+	        {% endfor %}
+	        document.getElementById('map').scrollIntoView();
+	        }
+	        myMap.setMarkers=setMarkers;
+    }
     
+	    
 
     
     </script>
@@ -128,9 +155,9 @@
     <!--  https://www.w3schools.com/graphics/google_maps_basic.asp  -->
     <div class="container">
     <img src = "{{ url_for('static',filename='Images/JustEatBikes.jpg') }}" alt="JustEat Bikes">
-   
-    <input type="button" value="Hello" class="btn" onClick="document.getElementById('map').scrollIntoView();" />
-   </div>
+    <input type="button" id="return" value="Return a bike" class="btn" onClick="myMap.setMarkers(1)" />
+    <input type="button" id="rent" value="Rent a bike" class="btn" onClick="myMap.setMarkers(0)" />
+                </div> 
     <div id="map">Unable to connect, please refresh</div>
    <img id="footer" src = "{{ url_for('static',filename='Images/footer.svg') }}" alt="Footer"> 
    

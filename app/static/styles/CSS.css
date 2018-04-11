@@ -19,36 +19,45 @@ body {
 
 
 
-.container {
-  position: relative;
-  width: 100%;
-}
-
 /* Make the image responsive */
 .container img {
-  width: auto;
+  width: 100%;
   height: 100%;
+
 }
 
-/* Style the button and place it in the middle of the container/image */
-.container .btn {
-  position: absolute;
-  top: 50%;
-  left: 50%;
+.container{
+	align-items: center;
+	display: flex
+}
+
+.btn {
+	display: inline-block;
+	position:absolute;
   transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
-  background-color: #555;
+  background-color: #3787A8;
   color: white;
   font-size: 16px;
   padding: 12px 24px;
   border: none;
   cursor: pointer;
   border-radius: 5px;
-  display: inline-block;
+	font-size: 1.7vw;
+	margin-top: auto;
+	margin-bottom: auto;
+	
 }
 
-.container .btn:hover {
-  background-color: black;
+#return{
+	left:57%;
+}
+
+#rent{
+	left:43%;
+}
+ .btn:hover {
+  background-color: #555;
 }
 
 
@@ -56,9 +65,5 @@ body {
 	width: 100%;
 	z-index: 0;
 	padding-top:2px;
-}
-
-#return{
-	width:100%;
 }
 

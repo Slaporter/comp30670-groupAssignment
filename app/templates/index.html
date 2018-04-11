@@ -154,10 +154,10 @@
 	
     <!--  https://www.w3schools.com/graphics/google_maps_basic.asp  -->
     <div class="container">
-    <img src = "{{ url_for('static',filename='Images/JustEatBikes.jpg') }}" alt="JustEat Bikes">
-    <input type="button" id="return" value="Return a bike" class="btn" onClick="myMap.setMarkers(1)" />
-    <input type="button" id="rent" value="Rent a bike" class="btn" onClick="myMap.setMarkers(0)" />
-                </div> 
+    <img class ="image" src = "{{ url_for('static',filename='Images/JustEatBikes.jpg') }}" alt="JustEat Bikes">
+	    <input type="button" id="return" value="Return a bike" class="btn" onClick="myMap.setMarkers(0)" />
+	    <input type="button" id="rent" value="Rent a bike" class="btn" onClick="myMap.setMarkers(1)" />
+    </div> 
     <div id="map">Unable to connect, please refresh</div>
    <img id="footer" src = "{{ url_for('static',filename='Images/footer.svg') }}" alt="Footer"> 
    

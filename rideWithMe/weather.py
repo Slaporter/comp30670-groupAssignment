@@ -8,15 +8,6 @@ import datetime
 
 
 
-api_url="http://api.openweathermap.org/data/2.5/weather?APPID=52b3fcc8ca94382baa1747a7dde59108&q=Dublin"
-
-
-response = requests.get(api_url)
-
-# Print the status code of the response.
-#print(response)
-print(response.json())
-json_data=response.json()
 
 DB_NAME = 'dbbikes'
 
@@ -43,6 +34,7 @@ def run():
 
 
             response = requests.get(api_url)
+            json_data=response.json()
             cnx=mysql.connector.connect(user='dbikes', password='dublinbikes', host='dbikes.c8m1rhzxgoap.us-east-2.rds.amazonaws.com', database='dbikes', )
 
             cursor=cnx.cursor()

@@ -116,8 +116,8 @@
 	              	  var options = {'title':'{{ stop[2] }}', pieHole:0.4
 	                          };
 	
-	                  var node = document.createElement('div'),
-	                  infoWindow = new google.maps.InfoWindow(),
+	                  var node = document.getElementById('draw-charts').appendChild(document.createElement('div'));
+	                  infoWindow = new google.maps.InfoWindow();
 	                  chart = new google.visualization.PieChart(node);
 	
 	                  chart.draw(data, options);
@@ -126,9 +126,9 @@
 	                  marker.open = true;
 	            }
 	            else{
-	
-	            	  infoWindow.close();
-	            
+	            	infoWindow.setContent(this.content);
+	            	  infoWindow.close(this.getMap(),this);
+	            	marker.open = false;
 	            	}
 	         google.maps.event.addListener(map, 'click', function() {
 	                infoWindow.close(map, marker);
@@ -160,7 +160,7 @@
     </div> 
     <div id="map">Unable to connect, please refresh</div>
    <img id="footer" src = "{{ url_for('static',filename='Images/footer.svg') }}" alt="Footer"> 
-   
+   <div class="chartWithOverlay"> <div id = "draw-charts">hello</div> <div class="overlay"><div>Click for more information</div></div></div>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBU1JvWkSvhDQ_HuTNOfF9h7QMehuLRWmA&callback=myMap"> </script>
     </body>
 </html>

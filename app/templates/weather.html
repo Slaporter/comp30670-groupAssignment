@@ -4,10 +4,142 @@
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1" name="viewport">
-    <title>Dublin Bikes</title>
+    <title>Dublin Bikes Weather</title>
 
 </head>
-<body>
-<div>"Hello"</div>
-</body>
+
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/CSS.css') }}">
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+
+<script type="text/javascript">
+    
+    if(typeof jQuery!=='undefined'){
+    console.log('jQuery Loaded');
+}
+else{
+    console.log('not loaded yet');
+}
+
+ $.getJSON("http://api.openweathermap.org/data/2.5/weather?APPID=52b3fcc8ca94382baa1747a7dde59108&q=Dublin", function(data) {
+          console.log(data);  
+     
+     var dt = new Date();
+     var time = dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
+     var hour = dt.getHours();
+     console.log(hour)
+     console.log(time);
+
+    var ktemp = data.main.temp;
+     console.log(ktemp);
+    var ctemp = (ktemp - 273).toFixed(2);
+    var description = data.weather[0].description;
+     var main = data.weather[0].main;
+    var wind = data['wind'].speed
+    var humidity = data.main.humidity;
+    console.log(wind);
+    
+    
+     
+     var html = "<table>";
+     html += "<p><span>" + data.name + "</span>," + data.sys.country + "</p>";
+        html += "<p>" + description + "</p>";
+     html += "<p>" + wind + " m/s" + "</p>"
+     html += "<p>" + humidity + "</p>"
+     html += "</table>"
+     
+        $("#wInfo").html(html);
+        var tempid = $("#temp");
+        tempid.html(ctemp + " &degC");
+        //toggle temp unit
+        var tcheck = false;
+        tempid.click(function() {
+          if (tcheck === false) {
+            tempid.html(ftemp + " &degF");
+            tcheck = true;
+          } else {
+            tempid.html(ctemp + " &degC");
+            tcheck = false;
+          }
+        });
+
+        //change background 
+             if (ctemp > 25 && hour > 21) {
+          $('body').css({
+            'background': 'url("https://images.unsplash.com/photo-1447611636938-80e6ffe13e1e?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&s=2490ccef50c994d4eb847769ff4ae67f")',
+            'background-size': 'cover'
+          });
+        } else if (ctemp < 25 && hour > 20 ) {
+          $('body').css({
+            'background': 'url("https://images.unsplash.com/photo-1447523264591-68112eb55c23?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&s=f8df825e23bd9de115150b5466f7edc6")',
+            'background-size': 'cover'
+              
+          });
+ //<img src = "{{ url_for('static',filename='Images/JustEatBikes.jpg') }}" alt="JustEat Bikes">
+//https://www.thesun.ie/news/1517726/irish-weather-status-yellow-alert-eight-counties-rain-strong-winds-met-eireann-latest/#
+        }
+             else if (ctemp < 25 && hour <11 ) {
+          $('body').css({
+            'background': 'url("static/Images/Bike_Rain.jpg")',
+            'background-size': 'cover'
+            
+          });
+             }
+
+        //change icon according to weather
+        var iconDiv = $(".icon99");
+
+        switch (main) {
+          case "Rain":
+            iconDiv.toggleClass('rain');
+            break;
+
+          case "Clouds":
+            iconDiv.toggleClass('cloud');
+            break;
+          case "Clear":
+            iconDiv.toggleClass('clear');
+            break;
+        case "Drizzle":
+            iconDiv.toggleClass('rain');
+            break;
+          default:
+            iconDiv.toggleClass('clear');
+        }
+
+
+
+ 
+ });
+ //   var temp = data.main.temp;
+   // console.log(data.main.temp)
+
+   // temp = json_data['main']['temp']
+  //  wind = json_data['wind']
+ //   clouds = json_data['clouds']
+ //   humidity = json_data['main']['humidity']
+ //   id9 = info['id']
+    
+    
+    
+</script>
+ </head>
+
+  <body>
+  
+    <div class="container text-center">
+  <h1></h1>
+
+  <h2> Just Eat dublinbikes Weather </h2>
+  <div class="row">
+    <div class="well col-md-6 col-md-offset-3" id="infWrap">
+      <div id="wInfo"></div>
+      <button class="btn btn-info" id="temp"></button>
+      <div class="icon99"></div>
+
+    </div>
+
+  </div>
+</div>
+  </body>
 </html>

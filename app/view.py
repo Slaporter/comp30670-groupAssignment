@@ -33,3 +33,13 @@ def charts():
     returnDict = {}
     returnDict['infos']=infos
     return render_template("charts.html",**returnDict)
+
+@app.route('/directions')
+def directions():
+    con=mysql.connector.connect(user='dbikes', password='dublinbikes', host='dbikes.c8m1rhzxgoap.us-east-2.rds.amazonaws.com', database='dbikes', )
+    cursor=con.cursor()
+    cursor.execute("SELECT `lat`, `lng`, `name`, `status`, `available_bike_stands`, `available_bikes`, `last_update` from `current_data`")
+    infos=cursor.fetchall()
+    returnDict = {}
+    returnDict['infos']=infos
+    return render_template("directions.html",**returnDict)

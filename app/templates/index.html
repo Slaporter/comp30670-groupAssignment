@@ -4,24 +4,21 @@
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1" name="viewport">
-    <title>Dublin Bikes</title>
+    <title> Dublin Bikes</title>
+	<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static', filename='styles/CSS.css') }}">
 
 </head>
 
 <body>
-	<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/CSS.css') }}">
-    <header>
-    </header>
-
-    <!-- <script src="{{url_for('static', filename='Java/JS.js')}}"></script> -->
-    
-    
+        
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
     
     
     function myMap() {
     	 
+    	
+    	
        var myLongitude = {
             lat: 53.3498,
             lng: -6.2603
@@ -29,7 +26,7 @@
     
     var map = new google.maps.Map(document.getElementById("map"), {
         center: myLongitude,
-        zoom: 13
+        zoom: 14
     });
 
     google.charts.load('current', {'packages':['corechart']});
@@ -74,7 +71,7 @@
 	    	var name = 'Name: {{ stop[2] }} Status: {{ stop[3]}} Available bike stands: {{ stop[4]}} Available bikes: {{ stop[5] }}';
 	        	
 	        var infoWindow = new google.maps.InfoWindow({
-	            content: ''
+	            content:  ''
 	        });
 	        
 	        
@@ -113,15 +110,19 @@
 	              	  ['Available bikes', {{ stop[5] }}]
 	              	]);
 	              	  
-	              	  var options = {'title':'{{ stop[2] }}', pieHole:0.4
+	              	  var options = {'title':'{{ stop[2] }}',legend: 'value', pieSliceText: 'value', pieHole:0.4
 	                          };
 	
-	                  var node = document.getElementById('draw-charts').appendChild(document.createElement('div'));
+	                  var node = document.createElement('div');
+	                  var html = "<div>"+
+	                  "<input type='button'  value='More Information'>"+ 
+	                  "</div>";
 	                  infoWindow = new google.maps.InfoWindow();
 	                  chart = new google.visualization.PieChart(node);
+	   
 	
 	                  chart.draw(data, options);
-	                  infoWindow.setContent(node);
+	                  infoWindow.setContent(html+node.outerHTML);
 	                  infoWindow.open(this.getMap(),this);
 	                  marker.open = true;
 	            }
@@ -145,10 +146,8 @@
 	        document.getElementById('map').scrollIntoView();
 	        }
 	        myMap.setMarkers=setMarkers;
+       
     }
-    
-	    
-
     
     </script>
 	
@@ -158,9 +157,9 @@
 	    <input type="button" id="return" value="Return a bike" class="btn" onClick="myMap.setMarkers(0)" />
 	    <input type="button" id="rent" value="Rent a bike" class="btn" onClick="myMap.setMarkers(1)" />
     </div> 
+    
     <div id="map">Unable to connect, please refresh</div>
    <img id="footer" src = "{{ url_for('static',filename='Images/footer.svg') }}" alt="Footer"> 
-   <div class="chartWithOverlay"> <div id = "draw-charts">hello</div> <div class="overlay"><div>Click for more information</div></div></div>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBU1JvWkSvhDQ_HuTNOfF9h7QMehuLRWmA&callback=myMap"> </script>
+   <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBU1JvWkSvhDQ_HuTNOfF9h7QMehuLRWmA&callback=myMap"> </script>
     </body>
 </html>

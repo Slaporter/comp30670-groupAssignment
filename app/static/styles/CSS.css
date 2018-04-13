@@ -79,3 +79,33 @@ body {
            top: 180px;   /* chartArea top  */
            left: 180px; /* chartArea left */
     }
+
+h1,h2{
+  color:white;
+}
+
+div.rain::before {
+    content:'\26C8';
+    font-size:100px;
+    
+}
+div.cloud::before {
+    content:'\2601';
+  font-size:50px;
+    
+}
+.clear:before {
+    content:'\2600';
+    font-size:50px;
+    
+}
+
+.row {
+    color: aliceblue;
+    font-size: 40px;
+}
+
+  html {
+    font-family: "Avenir Next", Helevetica, sans-serif;
+    text-align: center, color: aliceblue;
+  }

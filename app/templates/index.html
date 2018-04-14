@@ -150,6 +150,105 @@
     }
     
     </script>
+    
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+
+<script type="text/javascript">
+    
+    if(typeof jQuery!=='undefined'){
+    console.log('jQuery Loaded');
+}
+else{
+    console.log('not loaded yet');
+}
+ $.getJSON("http://api.openweathermap.org/data/2.5/weather?APPID=52b3fcc8ca94382baa1747a7dde59108&q=Dublin", function(data) {
+          console.log(data);  
+     
+     var dt = new Date();
+     var time = dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
+     var hour = dt.getHours();
+     console.log(hour)
+     console.log(time);
+    var ktemp = data.main.temp;
+     console.log(ktemp);
+    var ctemp = (ktemp - 273).toFixed(2);
+    var description = data.weather[0].description;
+     var main = data.weather[0].main;
+    var wind = data['wind'].speed
+    var humidity = data.main.humidity;
+    console.log(wind);
+    
+    
+     
+     var html = "";
+
+     
+        $("#wInfo").html(html);
+        var tempid = $("#temp");
+        tempid.html(ctemp + " &degC");
+        //toggle temp unit
+        var tcheck = false;
+        tempid.click(function() {
+          if (tcheck === false) {
+            tempid.html(ktemp + " K");
+            tcheck = true;
+          } else {
+            tempid.html(ctemp + " &degC");
+            tcheck = false;
+          }
+        });
+     
+    $("<tr><td>" + data.name + ", " + data.sys.country + "</td></tr>").appendTo("#pftable");
+     $("<tr><td>" + description + "</td></tr>").appendTo("#pftable");
+     $("<tr><td>" + main + "</td></tr>").appendTo("#pftable");
+     $("<tr><td>" + wind + " m/s" + "</td></tr>").appendTo("#pftable");
+     $("<tr><td>" + humidity + "</td></tr>").appendTo("#pftable");
+     
+     
+             if (ctemp > 25 && hour > 21) {
+          $('body').css({
+            'background': 'url("https://images.unsplash.com/photo-1447611636938-80e6ffe13e1e?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&s=2490ccef50c994d4eb847769ff4ae67f")',
+            'background-size': 'cover'
+          });
+        } else if (ctemp < 25 && hour > 20 ) {
+          $('body').css({
+            'background': 'url("https://images.unsplash.com/photo-1447523264591-68112eb55c23?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&s=f8df825e23bd9de115150b5466f7edc6")',
+            'background-size': 'cover'
+              
+          });
+
+        }
+             else if (ctemp < 25 && hour <11 ) {
+          $('body').css({
+            'background': 'url("static/Images/Bike_Rain.jpg")',
+            'background-size': 'cover'
+            
+          });
+             }
+        var iconDiv = $(".icon99");
+
+        switch (main) {
+          case "Rain":
+            iconDiv.toggleClass('rain');
+            break;
+
+//          case "Clouds":
+//            iconDiv.toggleClass('cloud');
+//            break;
+          case "Clear":
+            iconDiv.toggleClass('clear');
+            break;
+        case "Drizzle":
+            iconDiv.toggleClass('rain');
+            break;
+          default:
+            iconDiv.toggleClass('clear');
+        }
+
+ });
+
+        
+</script>
 	
     <!--  https://www.w3schools.com/graphics/google_maps_basic.asp  -->
     <div class="container">
@@ -157,6 +256,20 @@
 	    <input type="button" id="return" value="Return a bike" class="btn" onClick="myMap.setMarkers(0)" />
 	    <input type="button" id="rent" value="Rent a bike" class="btn" onClick="myMap.setMarkers(1)" />
     </div> 
+    
+     <div id = "weather_container" class = "weatherWidget">
+  <h3 class = centreFlex>Just Eat Current Weather</h3>
+    
+    <div id="infWrap" class = centerFlex>
+        
+        <div id ="icon" class="icon99"></div>
+        <div id = "button"><button class="btn btn-info" id="temp"></button> </div>
+    </div>
+        
+    <table id = "pftable">
+    </table>
+    
+</div>
     
     <div id="map">Unable to connect, please refresh</div>
    <img id="footer" src = "{{ url_for('static',filename='Images/footer.svg') }}" alt="Footer"> 

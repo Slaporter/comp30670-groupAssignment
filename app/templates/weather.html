@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html>
 
@@ -20,7 +22,6 @@
 else{
     console.log('not loaded yet');
 }
-
  $.getJSON("http://api.openweathermap.org/data/2.5/weather?APPID=52b3fcc8ca94382baa1747a7dde59108&q=Dublin", function(data) {
           console.log(data);  
      
@@ -29,7 +30,6 @@ else{
      var hour = dt.getHours();
      console.log(hour)
      console.log(time);
-
     var ktemp = data.main.temp;
      console.log(ktemp);
     var ctemp = (ktemp - 273).toFixed(2);
@@ -41,12 +41,8 @@ else{
     
     
      
-     var html = "<table>";
-     html += "<p><span>" + data.name + "</span>," + data.sys.country + "</p>";
-        html += "<p>" + description + "</p>";
-     html += "<p>" + wind + " m/s" + "</p>"
-     html += "<p>" + humidity + "</p>"
-     html += "</table>"
+     var html = "";
+
      
         $("#wInfo").html(html);
         var tempid = $("#temp");
@@ -55,15 +51,21 @@ else{
         var tcheck = false;
         tempid.click(function() {
           if (tcheck === false) {
-            tempid.html(ftemp + " &degF");
+            tempid.html(ktemp + " K");
             tcheck = true;
           } else {
             tempid.html(ctemp + " &degC");
             tcheck = false;
           }
         });
-
-        //change background 
+     
+    $("<tr><td>" + data.name + ", " + data.sys.country + "</td></tr>").appendTo("#pftable");
+     $("<tr><td>" + description + "</td></tr>").appendTo("#pftable");
+     $("<tr><td>" + main + "</td></tr>").appendTo("#pftable");
+     $("<tr><td>" + wind + " m/s" + "</td></tr>").appendTo("#pftable");
+     $("<tr><td>" + humidity + "</td></tr>").appendTo("#pftable");
+     
+     
              if (ctemp > 25 && hour > 21) {
           $('body').css({
             'background': 'url("https://images.unsplash.com/photo-1447611636938-80e6ffe13e1e?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&s=2490ccef50c994d4eb847769ff4ae67f")',
@@ -75,8 +77,7 @@ else{
             'background-size': 'cover'
               
           });
- //<img src = "{{ url_for('static',filename='Images/JustEatBikes.jpg') }}" alt="JustEat Bikes">
-//https://www.thesun.ie/news/1517726/irish-weather-status-yellow-alert-eight-counties-rain-strong-winds-met-eireann-latest/#
+
         }
              else if (ctemp < 25 && hour <11 ) {
           $('body').css({
@@ -85,8 +86,6 @@ else{
             
           });
              }
-
-        //change icon according to weather
         var iconDiv = $(".icon99");
 
         switch (main) {
@@ -94,9 +93,9 @@ else{
             iconDiv.toggleClass('rain');
             break;
 
-          case "Clouds":
-            iconDiv.toggleClass('cloud');
-            break;
+//          case "Clouds":
+//            iconDiv.toggleClass('cloud');
+//            break;
           case "Clear":
             iconDiv.toggleClass('clear');
             break;
@@ -107,39 +106,27 @@ else{
             iconDiv.toggleClass('clear');
         }
 
-
-
- 
  });
- //   var temp = data.main.temp;
-   // console.log(data.main.temp)
 
-   // temp = json_data['main']['temp']
-  //  wind = json_data['wind']
- //   clouds = json_data['clouds']
- //   humidity = json_data['main']['humidity']
- //   id9 = info['id']
-    
-    
-    
+        
 </script>
- </head>
 
-  <body>
+
+<body>
   
-    <div class="container text-center">
-  <h1></h1>
-
-  <h2> Just Eat dublinbikes Weather </h2>
-  <div class="row">
-    <div class="well col-md-6 col-md-offset-3" id="infWrap">
-      <div id="wInfo"></div>
-      <button class="btn btn-info" id="temp"></button>
-      <div class="icon99"></div>
-
+  
+<div id = "weather_container">
+  <h3 class = "centreFlex">Just Eat Current Weather</h3>
+    
+    <div id="infWrap" class = "centerFlex">
+        
+        <div id ="icon" class="icon99"></div>
+        <div id = "button"><button class="btn btn-info" id="temp"></button> </div>
     </div>
-
-  </div>
+        
+    <table id = "pftable">
+    </table>
+    
 </div>
-  </body>
+</body>
 </html>

@@ -127,10 +127,10 @@ def run():
                 if stop['number'] not in ids:
                     values=(stop['number'], stop['contract_name'], stop['name'], stop['address'], stop['position']['lat'], stop['position']['lng'], stop['banking'], stop['bonus'])
                     cursor.execute(add_static_data, values)
-                if (stop['number'], stop['last_update']) not in d_ids:
-                    print("in dynamic if")
-                    dvalues=(stop['number'],stop['status'],stop['bike_stands'],stop['available_bike_stands'],stop['available_bikes'],stop['last_update'])
-                    cursor.execute(add_dynamic_data, dvalues)
+                #if (stop['number'], stop['last_update']) not in d_ids:
+                #    print("in dynamic if")
+                #    dvalues=(stop['number'],stop['status'],stop['bike_stands'],stop['available_bike_stands'],stop['available_bikes'],stop['last_update'])
+                #    cursor.execute(add_dynamic_data, dvalues)
                 print("out of dd")
                 if stop['number'] not in c_ids:
                     print("in create")

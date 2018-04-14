@@ -87,7 +87,7 @@ def run():
             cursor.close()
             cnx.close()
 
-            time.sleep(60*60)
+            time.sleep(180*60)
 
 
         except:

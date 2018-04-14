@@ -205,14 +205,14 @@ else{
      $("<tr><td>" + humidity + "</td></tr>").appendTo("#pftable");
      
      
-             if (ctemp > 25 && hour > 21) {
+             if (ctemp > 12 && (hour > 6 && hour < 20 )) {
           $('body').css({
-            'background': 'url("https://images.unsplash.com/photo-1447611636938-80e6ffe13e1e?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&s=2490ccef50c994d4eb847769ff4ae67f")',
+            'background': 'url("static/Images/sunny.jpg")',
             'background-size': 'cover'
           });
-        } else if (ctemp < 25 && hour > 20 ) {
+        } else if (ctemp < 25 && (hour > 6 && hour < 20 )) {
           $('body').css({
-            'background': 'url("https://images.unsplash.com/photo-1447523264591-68112eb55c23?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&s=f8df825e23bd9de115150b5466f7edc6")',
+            'background': 'url("static/Images/cloudy.jpg")',
             'background-size': 'cover'
               
           });
@@ -257,13 +257,16 @@ else{
 	    <input type="button" id="rent" value="Rent a bike" class="btn" onClick="myMap.setMarkers(1)" />
     </div> 
     
-     <div id = "weather_container" class = "weatherWidget">
+    <div id="map">Unable to connect, please refresh</div>
+    
+         <div id = "weather_container" class = "weatherWidget">
+             
   <h3 class = centreFlex>Just Eat Current Weather</h3>
     
-    <div id="infWrap" class = centerFlex>
+    <div id="infWrap" class = "centerFlex">
         
         <div id ="icon" class="icon99"></div>
-        <div id = "button"><button class="btn btn-info" id="temp"></button> </div>
+        <div id = "button"><button id="temp"></button> </div>
     </div>
         
     <table id = "pftable">
@@ -271,7 +274,7 @@ else{
     
 </div>
     
-    <div id="map">Unable to connect, please refresh</div>
+    
    <img id="footer" src = "{{ url_for('static',filename='Images/footer.svg') }}" alt="Footer"> 
    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBU1JvWkSvhDQ_HuTNOfF9h7QMehuLRWmA&callback=myMap"> </script>
     </body>

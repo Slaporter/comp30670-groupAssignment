@@ -58,7 +58,9 @@ body {
 }
 
 #route{
-	left:45%;
+	left:49%;
+	display: inline;
+	text-decoration: none;
 }
  .btn:hover {
   background-color: #555;

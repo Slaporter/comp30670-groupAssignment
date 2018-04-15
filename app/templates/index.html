@@ -115,7 +115,7 @@
 	
 	                  var node = document.createElement('div');
 	                  var html = "<div>"+
-	                  "<input type='button'  value='More Information'>"+ 
+	                  "<input type='button'  value='More Information' onclick='displayDiv()' />"+ 
 	                  "</div>";
 	                  infoWindow = new google.maps.InfoWindow();
 	                  chart = new google.visualization.PieChart(node);
@@ -249,6 +249,10 @@ else{
 
         
 </script>
+
+<script>function displayDiv() {
+   document.getElementById('weather_container').style.display = "block";
+}</script>
 	
     <!--  https://www.w3schools.com/graphics/google_maps_basic.asp  -->
     <div class="container">
@@ -261,7 +265,7 @@ else{
     
     <div id="map">Unable to connect, please refresh</div>
     
-         <div id = "weather_container" class = "weatherWidget">
+         <div id = "weather_container" class = "weatherWidget" style="display:none;">
              
   <h3 class = centreFlex>Just Eat Current Weather</h3>
     

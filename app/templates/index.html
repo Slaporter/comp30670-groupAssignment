@@ -6,6 +6,7 @@
     <meta content="width=device-width, initial-scale=1" name="viewport">
     <title> Dublin Bikes</title>
 	<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static', filename='styles/CSS.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 </head>
 
@@ -265,20 +266,31 @@ else{
     
     <div id="map">Unable to connect, please refresh</div>
     
-         <div id = "weather_container" class = "weatherWidget" style="display:none;">
+    <div id = weather_container>
+        
+        <h3 class = centreFlex>Just Eat Weather <i style="font-size:60px" class="fa">&#xf206;</i> </h3>
+        
+         <div id = "weather_info" class = "weatherWidget">     
+            
+    
+        <div id="icon" class = "centerFlex">
+            <div id = "button"><button id="temp"></button> </div>
+        </div>
+        
+        <table id = "pftable" class = "wrapper">
+            <tbody>
+            <tr><td id = "icon" class = "icon99">  </td></tr>
+             </tbody>
+             </table>
+        
+        </div>
+        
+        <div id = "twitter_widget">
+                 
+             <a class="twitter-timeline" data-height="600" data-width= "20%" href="https://twitter.com/aaroadwatch?ref_src=twsrc%5Etfw">Tweets by aaroadwatch</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
              
-  <h3 class = centreFlex>Just Eat Current Weather</h3>
-    
-    <div id="infWrap" class = "centerFlex">
-        
-        <div id ="icon" class="icon99"></div>
-        <div id = "button"><button id="temp"></button> </div>
+        </div>
     </div>
-        
-    <table id = "pftable">
-    </table>
-    
-</div>
     
     
    <img id="footer" src = "{{ url_for('static',filename='Images/footer.svg') }}" alt="Footer"> 

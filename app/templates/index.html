@@ -7,6 +7,8 @@
     <title> Dublin Bikes</title>
 	<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static', filename='styles/CSS.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
 
 </head>
 
@@ -273,17 +275,27 @@ else{
          <div id = "weather_info" class = "weatherWidget">     
             
     
-        <div id="icon" class = "centerFlex">
-            <div id = "button"><button id="temp"></button> </div>
-        </div>
-        
-        <table id = "pftable" class = "wrapper">
+       
+
+            
+            <div class ="Outerbutton">
+            <div class ="Innerbutton">
+                <button id="temp" class = button> </button>
+                </div>
+            </div>
+                
+         <table id = "pftable" class = "wrapper">
             <tbody>
             <tr><td id = "icon" class = "icon99">  </td></tr>
              </tbody>
-             </table>
+             </table>               
+       
+</div>
+            
+             
+
         
-        </div>
+      
         
         <div id = "twitter_widget">
                  
@@ -291,9 +303,12 @@ else{
              
         </div>
     </div>
+
     
     
    <img id="footer" src = "{{ url_for('static',filename='Images/footer.svg') }}" alt="Footer"> 
    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBU1JvWkSvhDQ_HuTNOfF9h7QMehuLRWmA&callback=myMap"> </script>
     </body>
 </html>
+
+

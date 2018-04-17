@@ -170,17 +170,20 @@ else{
      var dt = new Date();
      var time = dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
      var hour = dt.getHours();
+     var minutes = dt.getMinutes();
      console.log(hour)
      console.log(time);
     var ktemp = data.main.temp;
      console.log(ktemp);
-    var ctemp = (ktemp - 273).toFixed(2);
+      var ctemp = (ktemp - 273).toFixed(2);
+      var ftemp = (ctemp * 9 / 5 + 32).toFixed(2);
+   
     var description = data.weather[0].description;
      var main = data.weather[0].main;
     var wind = data['wind'].speed
     var humidity = data.main.humidity;
-    console.log(wind);
-    
+    console.log(main);
+
     
      
      var html = "";
@@ -188,12 +191,12 @@ else{
      
         $("#wInfo").html(html);
         var tempid = $("#temp");
-        tempid.html(ctemp + " &degC");
+        tempid.html(ctemp + "<h4> &degC<h/4>");
         //toggle temp unit
         var tcheck = false;
         tempid.click(function() {
           if (tcheck === false) {
-            tempid.html(ktemp + " K");
+            tempid.html(ftemp + "&degF");
             tcheck = true;
           } else {
             tempid.html(ctemp + " &degC");
@@ -201,43 +204,144 @@ else{
           }
         });
      
-    $("<tr><td>" + data.name + ", " + data.sys.country + "</td></tr>").appendTo("#pftable");
-     $("<tr><td>" + description + "</td></tr>").appendTo("#pftable");
-     $("<tr><td>" + main + "</td></tr>").appendTo("#pftable");
-     $("<tr><td>" + wind + " m/s" + "</td></tr>").appendTo("#pftable");
-     $("<tr><td>" + humidity + "</td></tr>").appendTo("#pftable");
+     
+     $("<td>" + data.dt + data.hour + data.minutes + "</td>").appendTo("#date");
+    $("<tr><td>" + data.name + "</td></tr>").appendTo("#city");
+//     $("<tr><td>" + description +  "</td></tr>").appendTo("#pftable");
+     $("<tr><td>" + main + "</td><td>" + humidity + "</td><td>" + wind + " m/s" + "</td></tr>").appendTo("#pftable");
      
      
-             if (ctemp > 12 && (hour > 6 && hour < 20 )) {
-          $('body').css({
-            'background': 'url("static/Images/sunny.jpg")',
-            'background-size': 'cover'
-          });
-        } else if (ctemp < 25 && (hour > 6 && hour < 20 )) {
+//     $("<tr><td>" + wind + " m/s" + "</td></tr>").appendTo("#pftable");
+//     $("<tr><td>" + humidity + "</td><td>" + humidity + "</td></tr>").appendTo("#pftable");
+     
+     
+             if (main = "Clouds"  && hour <= 20) {
           $('body').css({
             'background': 'url("static/Images/cloudy.jpg")',
+            'background-size': 'cover'
+          });
+                 
+        }
+     else if (main = "Drizzle"  && hour <= 20)  {
+          $('body').css({
+            'background': 'url("static/Images/drizzle.jpg")',
             'background-size': 'cover'
               
           });
 
         }
-             else if (ctemp < 25 && hour <11 ) {
+     
+              else if (main = "Rain"  && hour <= 20)  {
           $('body').css({
             'background': 'url("static/Images/Bike_Rain.jpg")',
             'background-size': 'cover'
-            
+              
           });
-             }
+
+        }
+    
+             else if (main = "Clear"  && hour <= 20)  {
+          $('body').css({
+            'background': 'url("static/Images/calm.jpg")',
+            'background-size': 'cover'
+              
+          });
+
+        }
+    
+             else if (main = "Fog"  && hour <= 20)  {
+          $('body').css({
+            'background': 'url("static/Images/fog_dublin.jpg")',
+            'background-size': 'cover'
+              
+          });
+
+        }
+    
+             else if (main = "Mist"  && hour <= 20)  {
+          $('body').css({
+            'background': 'url("static/Images/atmosphere.jpg")',
+            'background-size': 'cover'
+              
+          });
+
+        }
+    
+             else if (main = "Clouds" && hour <= 20)  {
+          $('#weather_container').css({
+            'background': 'url("static/Images/cloudy-night.jpg")',
+            'background-size': 'cover'
+              
+          });
+
+        }
+                  else if (main = "Clouds" && hour > 20)  {
+          $('#weather_container').css({
+            'background': 'url("static/Images/cloudy-night.jpg")',
+            'background-size': 'cover'
+              
+          });
+
+        }
+    
+             else if ((main = "Rain") && hour <= 20)  {
+          $('body').css({
+            'background': 'url("static/Images/rain.jpg")',
+            'background-size': 'cover'
+              
+          });
+
+        }
+     
+                  else if ((main = "Drizzle") && hour >= 20)  {
+          $('body').css({
+            'background': 'url("static/Images/rain.jpg)',
+            'background-size': 'contain ' 
+              
+          });
+
+        }
+     
+                       else if ((main = "Rain") && hour >= 20)  {
+          $('#weather_container').css({
+            'background': 'url("static/Images/rain.jpg")',
+            'background-size': 'cover'
+              
+          });
+
+        }
+     
+                       else if ((main = "Clear") && hour >= 20)  {
+          $('body').css({
+            'background': 'url("static/Images/calm-night.jpg")',
+            'background-size': 'cover'
+              
+          });
+
+        }
+    
+
+     
+     
+
+     
         var iconDiv = $(".icon99");
 
-        switch (main) {
+//     var iconcode = data.weather[0].icon;
+//    var iconurl = "http://openweathermap.org/img/w/" + iconcode + ".png";
+//     $('#wicon').attr('src', iconurl);
+
+     
+
+       switch (main) {
           case "Rain":
             iconDiv.toggleClass('rain');
             break;
 
-//          case "Clouds":
-//            iconDiv.toggleClass('cloud');
-//            break;
+          case "Clouds":
+            iconDiv.toggleClass('cloud');
+            break;
+                
           case "Clear":
             iconDiv.toggleClass('clear');
             break;
@@ -246,7 +350,7 @@ else{
             break;
           default:
             iconDiv.toggleClass('clear');
-        }
+      }
 
  });
 
@@ -270,41 +374,66 @@ else{
     
     <div id = weather_container>
         
-        <h3 class = centreFlex>Just Eat Weather <i style="font-size:60px" class="fa">&#xf206;</i> </h3>
+        <h3 id = "header" class = centreFlex>Just Eat Weather Information <i style="font-size:60px" class="fa">&#xf206;</i> </h3>
         
-         <div id = "weather_info" class = "weatherWidget">     
-            
-    
-       
-
-            
+         <div id = "weather_info" class = "weatherWidget">
+             
+        
+        
             <div class ="Outerbutton">
             <div class ="Innerbutton">
                 <button id="temp" class = button> </button>
                 </div>
             </div>
-                
+             
+
+
          <table id = "pftable" class = "wrapper">
             <tbody>
-            <tr><td id = "icon" class = "icon99">  </td></tr>
+            <tr>
+                  <td id = "time">  </td>
+                <td colspan="2" id = "icon99" class = "icon99">Dublin, IE   </td>
+              
+               
+            </tr>
+             
+<!--                <tr></tr>-->
+                <tr>
+                    
+                    <td> Main <i class="fa fa-image" style="font-size:36px"></i> 
+                    </td>
+                    <td> Humidity <i class="fa fa-tint" style="font-size:36px"></i> 
+                    </td>
+                    <td> Wind <span>&#9780;</span>
+                    </td>
+                </tr>
              </tbody>
-             </table>               
+             </table>
+             
+
+
+            
        
 </div>
-            
-             
 
-        
-      
-        
-        <div id = "twitter_widget">
+
+<!--
+                     <div id = "weather_graph" >
+             <h3> this is where the graph will go</h3>
+             </div>    
+-->
+
+
+        </div>
+    
+            <div id = "twitter_widget">
                  
-             <a class="twitter-timeline" data-height="600" data-width= "20%" href="https://twitter.com/aaroadwatch?ref_src=twsrc%5Etfw">Tweets by aaroadwatch</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+             <a class="twitter-timeline" data-height="100px" data-width= "20%" href="https://twitter.com/aaroadwatch?ref_src=twsrc%5Etfw">Tweets by aaroadwatch</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
              
         </div>
-    </div>
 
-    
+
+
     
    <img id="footer" src = "{{ url_for('static',filename='Images/footer.svg') }}" alt="Footer"> 
    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBU1JvWkSvhDQ_HuTNOfF9h7QMehuLRWmA&callback=myMap"> </script>
@@ -312,3 +441,12 @@ else{
 </html>
 
 
+<!--<td id ="icon99"><img id="icon99" src="" alt="Weather icon">  </td>-->
+
+
+<!--
+<script src='//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/d3.min.js'></script>
+             <script>window.myWidgetParam ? window.myWidgetParam : window.myWidgetParam = [];  window.myWidgetParam.push({id: 21,cityid: '2964574',appid: '52b3fcc8ca94382baa1747a7dde59108&q=Dublin',units: 'metric',containerid: 'openweathermap-widget-21',  });  (function() {var script = document.createElement('script');script.async = true;script.charset = "utf-8";script.src = "//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/weather-widget-generator.js";var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(script, s);  })();</script>
+
+
+-->

@@ -13,6 +13,7 @@ import pickle
 from sklearn.ensemble import RandomForestRegressor
 import scipy
 from sklearn.externals import joblib
+from calendar import day_abbr
 
 
 @app.route('/')
@@ -44,7 +45,9 @@ def charts():
     
         clf = pickle.load(open('models/stop'+str(int(stopnumber))+'.pkl', 'rb'))
         returnDict['prediction']=int(clf.predict(pd.DataFrame({'hour':[time], 'weekday':[day], 'visibility':[90],'windspeed':[28],'temp':[temp],'humidity':[0.56]}))[0])
-
+        returnDict['day']=day
+        returnDict['time']=time
+        returnDict['stopnumber']=int(stopnumber)
     con=mysql.connector.connect(user='dbikes', password='dublinbikes', host='dbikes.c8m1rhzxgoap.us-east-2.rds.amazonaws.com', database='dbikes', )
     cursor=con.cursor()
     cursor.execute("SELECT `lat`, `lng`, `name`, `number`, `status`, `available_bike_stands`, `available_bikes`, `last_update` from `current_data`")

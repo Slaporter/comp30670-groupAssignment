@@ -160,6 +160,7 @@ h3 { color: white;
     background: linear-gradient(110deg, #3787A8 40%, rgba(0, 0, 0, 0) 30%), radial-gradient(farthest-corner at 0% 0%, #3677a8 70%, #3787A8  70%);
     float: left;
     margin-right: 5%;
+    margin-bottom: 5%;
 }
 
 #weather_info{
@@ -357,7 +358,7 @@ h4{
     font-size: 20px;
     text-transform:capitalize;
     background-color: black;
-/*    border: 4px solid white;*/
+   border: 4px solid black;
     border-collapse: collapse;
     border-radius: 40px;
     height: 300px;
@@ -367,6 +368,7 @@ h4{
 /*    display:inline-block;*/
     height: auto;
     position: relative;
+    margin-bottom: 5%;
 }
 
 #wftable{color: white;

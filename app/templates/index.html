@@ -162,6 +162,7 @@
 
 <script type="text/javascript">
     
+    
     if(typeof jQuery!=='undefined'){
     console.log('jQuery Loaded');
 }
@@ -373,32 +374,80 @@ $(document).ready(function(){
 
      $.getJSON("http://api.openweathermap.org/data/2.5/forecast?q=Dublin,ie&appid=52b3fcc8ca94382baa1747a7dde59108", function(data) {
           console.log(data);
-
+         
 
      
      var times = data.list;
      var day1 = times[0];
-     var day1Time = day1.dt_txt
+     var day1Time = day1.dt
      var day1Icon = day1.weather[0].icon;
      
           var day2 = times[7];
-     var day2Time = day2.dt_txt
+     var day2Time = day2.dt
      var day2Icon = day2.weather[0].icon;
      
         var day3 = times[15];
-     var day3Time = day3.dt_txt
+     var day3Time = day3.dt
      var day3Icon = day3.weather[0].icon;
      
           var day4 = times[23];
-     var day4Time = day4.dt_txt
+     var day4Time = day4.dt
      var day4Icon = day4.weather[0].icon;
      
-          var day5 = times[31];
-
-     var day5Time = day5.dt_txt
+    var day5 = times[31];
+     var day5Time = day5.dt
 
      var day5Icon = day5.weather[0].icon;
+         
+         
+   var times = [day1Time, day2Time, day3Time]
+
+         {array of times}
+         {array of icons}
+         indexing will be the same
+         
+         format_time = {}
+         
+         for int i = 0, i < time.lenght
+         
+var weekday=new Array("Sun","Mon","Tue","Wed","Thu","Fri","Sat");
+
+var monthname=new Array("Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec");
+
+         
+var pubDate = new Date( day1Time* 1000); //exp
+var formattedDate = weekday[pubDate.getDay()] + ' '
+  + monthname[pubDate.getMonth()] + ' '
+  + pubDate.getDate()
+console.log(formattedDate)
+         
+var pubDate2 = new Date( day2Time* 1000); //exp
+var formattedDate2 = weekday[pubDate2.getDay()] + ' '
+  + monthname[pubDate2.getMonth()] + ' '
+  + pubDate2.getDate()
+console.log(formattedDate2)
+
+var pubDate3 = new Date( day3Time* 1000);
+var formattedDate3 = weekday[pubDate3.getDay()] + ' '
+  + monthname[pubDate3.getMonth()] + ' '
+  + pubDate3.getDate()
+console.log(formattedDate3)
+
+var pubDate4 = new Date( day4Time* 1000);
+var formattedDate4 = weekday[pubDate4.getDay()] + ' '
+  + monthname[pubDate4.getMonth()] + ' '
+  + pubDate4.getDate()
+console.log(formattedDate4)
+
+var pubDate5 = new Date( day5Time* 1000);
+var formattedDate5 = weekday[pubDate5.getDay()] + ' '
+  + monthname[pubDate5.getMonth()] + ' '
+  + pubDate5.getDate()
+console.log(formattedDate5)
+         
+         
      
+         
      
    
    
@@ -423,21 +472,28 @@ $(document).ready(function(){
      
      
      
-    $("<tr><td>" + day1Time + "</td></tr>").appendTo("#day1");
-     $("<tr><td>" + day2Time + "</td></tr>").appendTo("#day2");
-     $("<tr><td>" + day3Time + "</td></tr>").appendTo("#day3");
-     $("<tr><td>" + day4Time + "</td></tr>").appendTo("#day4");
-     $("<tr><td>" + day5Time + "</td></tr>").appendTo("#day5");
+    $("<tr><td>" + formattedDate + "</td></tr>").appendTo("#day1");
+     $("<tr><td>" + formattedDate2 + "</td></tr>").appendTo("#day2");
+     $("<tr><td>" + formattedDate3 + "</td></tr>").appendTo("#day3");
+     $("<tr><td>" + formattedDate4 + "</td></tr>").appendTo("#day4");
+     $("<tr><td>" + formattedDate5 + "</td></tr>").appendTo("#day5");
          
-        
-    $(document).ready(function(){
-    $("#more_weather").click(function(){
-       $("#wftable").slideDown("slow");
+$(document).ready(
+    function(){
+        $("#more_weather").click(function () {
+            $("#wftable").show("slow");
+        });
+
     });
-     });
+         
+$(document).ready(
+    function(){
+        $("#more_weather").click(function () {
+            $("#wftable").toggle();
+        });
+    });
 
-
- })
+})
 
         
 </script>

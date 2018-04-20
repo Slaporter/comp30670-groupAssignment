@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <title>Dublin Bikes</title>
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/CSS.css') }}">
+
+</head>
+
+<body>
+<div class="container">
+     <img class ="pimg" width="100%" src = "{{ url_for('static',filename='Images/OneBike.jpg') }}" alt="JustEat Bikes">
+ 
+ <div class="btn" id="predict_form">
+  <form id="predict_form" method='get'>
+  	<select id="day" name='day'>
+  		<option>Select a day</option>
+  		<option value=0>Monday</option>
+  		<option value=1>Tuesday</option>
+  		<option value=2>Wednesday</option>
+  		<option value=3>Thursday</option>
+  		<option value=4>Friday</option>
+  		<option value=5>Saturday</option>
+  		<option value=6>Sunday</option>
+  	</select>
+  	<select id="time" name='time'>
+  		<option>Select a time</option>
+  		<option value=0>00:00</option>
+  		<option value=1>01:00</option>
+  		<option value=2>02:00</option>
+  		<option value=3>03:00</option>
+  		<option value=4>04:00</option>
+  		<option value=5>05:00</option>
+  		<option value=6>06:00</option>
+  		<option value=7>07:00</option>
+  		<option value=8>08:00</option>
+  		<option value=9>09:00</option>
+  		<option value=10>10:00</option>
+  		<option value=11>11:00</option>
+  		<option value=12>12:00</option>
+  		<option value=13>13:00</option>
+  		<option value=14>14:00</option>
+  		<option value=15>15:00</option>
+  		<option value=16>16:00</option>
+  		<option value=17>17:00</option>
+  		<option value=18>18:00</option>
+  		<option value=19>19:00</option>
+  		<option value=20>20:00</option>
+  		<option value=21>21:00</option>
+  		<option value=22>22:00</option>
+  		<option value=23>23:00</option>
+  	</select>
+  	<select id="stops" name='stopnumber'>
+  	<option> Select a station</option>
+  	</select>
+  	<select id=temp name ="temp">
+  	<option> Select a temp</option>
+  		<option value=0>-2</option> 
+  		<option value=1>-1</option>
+  		<option value=2>0</option>
+  		<option value=3>1</option>
+  		<option value=4>2</option>
+  		<option value=5>3</option>
+  		<option value=6>4</option>
+  		<option value=7>5</option>
+  		<option value=8>6</option>
+  		<option value=9>7</option>
+  		<option value=10>8</option>
+  		<option value=11>9</option>
+  		<option value=12>10</option>
+  		<option value=13>11</option>
+  		<option value=14>12</option>
+  		<option value=15>13</option>
+  	</select>
+  	<input type="submit" style="font-size:18px" value="Submit">
+  </form></div></div>
+  
+ <script type="text/javascript">
+
+ 
+{% if prediction %}
+var days = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"]
+var stopnum=parseInt("{{ stopnumber }}")
+var name = "You selected <br> Day: "+days["{{ day }}"]+" <br> Time: {{ time }}:00 <br> Stop: {{ infos[stopnumber][2] }} <br> Our prediction is: {{ prediction }} available bikes";
+window.onload = function print(){
+document.getElementById("display").innerHTML = name;
+};
+{% else %}
+    "Hi"
+{% endif %}
+
+
+{% for info in infos %}
+
+var select = document.getElementById("stops");
+var option = document.createElement("option");
+option.text = " {{ info[2] }}";
+option.value = " {{ info[3] }}";
+select.add(option);
+	
+{% endfor %}
+
+</script>
+
+  <div id="display"></div>
+     <img id="footer" src = "{{ url_for('static',filename='Images/footer.svg') }}" alt="Footer"> 
+  
+  
+  </body>
+</html>

@@ -33,8 +33,8 @@ def weather():
     return render_template("weather.html",**returnDict)
 
 
-@app.route('/charts')
-def charts():
+@app.route('/prediction')
+def prediction():
     returnDict={}
     path=request.url
     if "day" in path:
@@ -47,21 +47,18 @@ def charts():
         returnDict['prediction']=int(clf.predict(pd.DataFrame({'hour':[time], 'weekday':[day], 'visibility':[90],'windspeed':[28],'temp':[temp],'humidity':[0.56]}))[0])
         returnDict['day']=day
         returnDict['time']=time
-        returnDict['stopnumber']=int(stopnumber)
+        if int(stopnumber)<20:
+            returnDict['stopnumber']=int(stopnumber)-1
+        else:
+            returnDict['stopnumber']=int(stopnumber)-2
     con=mysql.connector.connect(user='dbikes', password='dublinbikes', host='dbikes.c8m1rhzxgoap.us-east-2.rds.amazonaws.com', database='dbikes', )
     cursor=con.cursor()
     cursor.execute("SELECT `lat`, `lng`, `name`, `number`, `status`, `available_bike_stands`, `available_bikes`, `last_update` from `current_data`")
     infos=cursor.fetchall()
     returnDict['infos']=infos
-    return render_template("charts.html",**returnDict)
+    return render_template("prediction.html",**returnDict)
 
-# @app.route('/charts?day')
-# def return_prediction():
-#     returnDict={}
-#     day = request.args.get('day')
-#     time = request.args.get('time')
-#     stop_number = request.args.get('stopnumber')
-#     return render_template("charts.html", **{'hi':1})
+
     
 @app.route('/directions')
 def directions():

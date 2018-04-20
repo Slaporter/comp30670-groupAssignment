@@ -63,12 +63,6 @@ body {
 	text-decoration: none;
 }
 
-#predict_form{
-	left:50%;
-	display: inline;
-	font-size: 20px;	
-}
-
  .btn:hover {
   background-color: #555;
 }
@@ -80,10 +74,37 @@ body {
 	padding-top:2px;
 }
 
+#predict_form{
+	left:49%;
+	display: inline;
+	margin-top:auto;
+}
+
+.pimg{
+    position: relative;
+}
+
+select {
+   font-size: 18px;
+}
+
+#display{
+	position: absolute;
+	left: 48%;
+	display:inline;
+	font-size: 1.6vw;
+	transform: translate(-50%,-200%);
+	-ms-transform: translate(-50%,-200%); 
+    -webkit-transform: translate(-50%,-200%);
+	border-radius: 5px;
+	border-style: solid;
+	background-color:#3787A8;
+	border-color: #555;
+}
+
 #chart{
 	width:400px;
 	position: relative;
-
 }
 
  
@@ -190,21 +211,10 @@ h3 { color: white;
 .Outerbutton {
 width:20%;
 height: 200px;
-<<<<<<< HEAD
-margin-bottom:2%;
-margin-right: 30%;
-margin-left: 30%;
-
-
-
-    
-
-
-=======
 margin-left:%;
 margin-bottom:5%;
 margin-right: 0;
->>>>>>> 802cd0a5716b4091d9803ccc900bf089b88165f0
+
     
 }
 
@@ -376,22 +386,7 @@ button.twitter{
     margin-bottom: 5%;
     color: white;
     border-radius: 0%;
-    font-size: 20px;
-    
-  
-    
+    font-size: 20px;    
 }
 
 
-<<<<<<< HEAD
-
-#icon_{
-    height:120px;
-    width: 120px;
-}
-
-th{
-    text-align: center;
-}
-=======
->>>>>>> 802cd0a5716b4091d9803ccc900bf089b88165f0

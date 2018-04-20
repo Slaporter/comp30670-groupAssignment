@@ -172,7 +172,7 @@ else{
         $("#wInfo").html(html);
         var tempid = $("#temp");
         tempid.html(ctemp + "<h4> &degC<h/4>");
-        //toggle temp unit
+        
         var tcheck = false;
         tempid.click(function() {
           if (tcheck === false) {
@@ -194,14 +194,25 @@ else{
 
      
              if (main = "Clouds"  && hour <= 20) {
-          $('body').css({
+          $('#weather_container').css({
             'background': 'url("static/Images/cloudy.jpg")',
             'background-size': 'cover'
           });
                  
         }
+     
+            else if (main = "Clouds" && hour > 20)  {
+          $('#weather_container').css({
+            'background': 'url("static/Images/cloudy-night.jpg")',
+            'background-size': 'cover'
+              
+          });
+
+        }
+     
+     
      else if (main = "Drizzle"  && hour <= 20)  {
-          $('body').css({
+          $('#weather_container').css({
             'background': 'url("static/Images/drizzle.jpg")',
             'background-size': 'cover'
               
@@ -209,9 +220,27 @@ else{
 
         }
      
+          else if (main = "Drizzle"  && hour > 20)  {
+          $('#weather_container').css({
+            'background': 'url("static/Images/rain_night_lamp.jpg")',
+            'background-size': 'cover'
+              
+          });
+
+        }
+     
               else if (main = "Rain"  && hour <= 20)  {
-          $('body').css({
-            'background': 'url("static/Images/Bike_Rain.jpg")',
+          $('#weather_container').css({
+            'background': 'url("static/Images/drizzle.jpg")',
+            'background-size': 'cover'
+              
+          });
+
+        }
+     
+                   else if (main = "Rain"  && hour > 20)  {
+          $('#weather_container').css({
+            'background': 'url("static/Images/rain_night_lamp.jpg")',
             'background-size': 'cover'
               
           });
@@ -219,78 +248,16 @@ else{
         }
     
              else if (main = "Clear"  && hour <= 20)  {
-          $('body').css({
+          $('#weather_container').css({
             'background': 'url("static/Images/calm.jpg")',
             'background-size': 'cover'
               
           });
 
         }
-    
-             else if (main = "Fog"  && hour <= 20)  {
-          $('body').css({
-            'background': 'url("static/Images/fog_dublin.jpg")',
-            'background-size': 'cover'
-              
-          });
-
-        }
-    
-             else if (main = "Mist"  && hour <= 20)  {
-          $('body').css({
-            'background': 'url("static/Images/atmosphere.jpg")',
-            'background-size': 'cover'
-              
-          });
-
-        }
-    
-             else if (main = "Clouds" && hour <= 20)  {
-          $('#weather_container').css({
-            'background': 'url("static/Images/cloudy-night.jpg")',
-            'background-size': 'cover'
-              
-          });
-
-        }
-                  else if (main = "Clouds" && hour > 20)  {
-          $('#weather_container').css({
-            'background': 'url("static/Images/cloudy-night.jpg")',
-            'background-size': 'cover'
-              
-          });
-
-        }
-    
-             else if ((main = "Rain") && hour <= 20)  {
-          $('body').css({
-            'background': 'url("static/Images/rain.jpg")',
-            'background-size': 'cover'
-              
-          });
-
-        }
      
-                  else if ((main = "Drizzle") && hour >= 20)  {
-          $('body').css({
-            'background': 'url("static/Images/rain.jpg)',
-            'background-size': 'contain ' 
-              
-          });
-
-        }
-     
-                       else if ((main = "Rain") && hour >= 20)  {
+                  else if (main = "Clear"  && hour <= 20)  {
           $('#weather_container').css({
-            'background': 'url("static/Images/rain.jpg")',
-            'background-size': 'cover'
-              
-          });
-
-        }
-     
-                       else if ((main = "Clear") && hour >= 20)  {
-          $('body').css({
             'background': 'url("static/Images/calm-night.jpg")',
             'background-size': 'cover'
               
@@ -298,7 +265,33 @@ else{
 
         }
     
+             else if (main = "Fog")  {
+          $('#weather_container').css({
+            'background': 'url("static/Images/fog_dublin.jpg")',
+            'background-size': 'cover'
+              
+          });
 
+        }
+     
+                  else if (main = "Snow")  {
+          $('#weather_container').css({
+            'background': 'url("static/Images/fog_dublin.jpg")',
+            'background-size': 'cover'
+              
+          });
+
+        }
+     
+     header = "<th colspan= 10 >5 Day Weather Information for Dublin at " + hour + ":00 Hours</th>"
+     
+      $(header).appendTo("#hd")
+     
+          headerX = "<th colspan= 10 >5 Day Weather + 12 Hours</th>"
+     
+      $(headerX).appendTo("#hdX")
+     
+    
     var iconcode = data.weather[0].icon;
     var iconurl = "http://openweathermap.org/img/w/" + iconcode + ".png";
     $('#icon_').attr('src', iconurl);
@@ -317,6 +310,7 @@ else{
 
  });
     
+ 
 
      $.getJSON("http://api.openweathermap.org/data/2.5/forecast?q=Dublin,ie&appid=52b3fcc8ca94382baa1747a7dde59108", function(data) {
           console.log(data);
@@ -324,33 +318,65 @@ else{
 
      
      var times = data.list;
-     var day1 = times[3];
+     var day1 = times[0];
+         
+ 
+
      var day1Time = day1.dt
+     console.log("day1time ", day1Time)
      var day1Icon = day1.weather[0].icon;
      
-    var day2 = times[11];
+     var day2 = times[8];
      var day2Time = day2.dt
      var day2Icon = day2.weather[0].icon;
      
-    var day3 = times[19];
+     var day3 = times[16];
      var day3Time = day3.dt
      var day3Icon = day3.weather[0].icon;
      
-    var day4 = times[27];
+     var day4 = times[24];
      var day4Time = day4.dt
      var day4Icon = day4.weather[0].icon;
      
-    var day5 = times[35];
+     var day5 = times[32];
      var day5Time = day5.dt
-var day5Icon = day5.weather[0].icon;
+     var day5Icon = day5.weather[0].icon;
          
 var times = [day1Time, day2Time, day3Time, day4Time, day5Time];
 var icons = [day1Icon, day2Icon, day3Icon, day4Icon, day5Icon]
+
+var timex = data.list;
+     var day1X = timex[4];
+        console.log(day1X)
+     var day1XTime = day1X.dt
+     console.log(day1XTime)
+     var day1XIcon = day1X.weather[0].icon;
+         console.log(day1XIcon)
+     
+     var day2X = timex[12];
+     var day2XTime = day2X.dt
+     var day2XIcon = day2X.weather[0].icon;
+     
+     var day3X = timex[20];
+     var day3XTime = day3X.dt
+     var day3XIcon = day3X.weather[0].icon;
+     
+     var day4X = timex[28];
+     var day4XTime = day4X.dt
+     var day4XIcon = day4X.weather[0].icon;
+     
+     var day5X = timex[36];
+     var day5XTime = day5X.dt
+     var day5XIcon = day5X.weather[0].icon;
+         
+var timesX = [day1XTime, day2XTime, day3XTime, day4XTime, day5XTime];
+var iconsX = [day1XIcon, day2XIcon, day3XIcon, day4XIcon, day5XIcon]
+
 var weekday=new Array("Sun","Mon","Tue","Wed","Thu","Fri","Sat");
 var monthname=new Array("Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec");
 
 
-   var format_time = []
+  
    var html = "";       
    var format_time = []
    
@@ -380,12 +406,47 @@ var monthname=new Array("Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","O
          
          $(html).appendTo("#wftable")
          $(html2).appendTo("#wftable")
+         
+        
+   var htmlX = "";       
+   var format_timeX = []
+   
+   for (var i = 0; i < timesX.length; i++)
+       
+       {
+           var dateX = new Date(timesX[i]*1000);
+           var formattedDateX = weekday[dateX.getDay()] + ' '+ monthname[dateX.getMonth()] + ' '+ dateX.getDate();
+           
+           format_timeX[i] = formattedDateX
+           console.log(formattedDate)
+           
+           
+       }
+         var htmlX = "<tr>";
+         var html2X = "<tr>";
+         for (var i = 0; i < format_timeX.length; i++)
+             
+             {
+                 htmlX += "<td id =day" + i + ">" + format_timeX[i] + "</td>"
+                 htmlX += "<td><img id =icon" + i + " src = http://openweathermap.org/img/w/" + iconsX[i] + ".png></img></td>"
+                 }
+         htmlX += "</tr>"
+         html2X += "</tr>"
+         
+         console.log(html)
+         
+         $(htmlX).appendTo("#wftableX")
+         $(html2X).appendTo("#wftableX")
 
 
          
 
 $( "#morning_weather" ).click(function() {
   $( "#wftable" ).slideToggle( "fast" );
+});
+         
+$( "#morning_weatherX" ).click(function() {
+  $( "#wftableX" ).slideToggle( "fast" );
 });
 
    });     
@@ -428,47 +489,67 @@ $( "#morning_weather" ).click(function() {
 
          <table id = "pftable" class = "wrapper">
             <tbody>
-                <tr> <th colspan="3">Current Weather Information for Dublin</th></tr>
-<!--                <caption id = "icon99" class = "icon99"></caption>-->
-            <tr>
-       <td colspan="3"> <img class = "icon" id="icon_" src="" alt="Weather icon"> </td>
-                
-              
-               
-            </tr>
-             
-<!--                <tr></tr>-->
                 <tr>
-                    
-                    <td> Main <i class="fa fa-image" style="font-size:36px"></i> 
+                    <th colspan="3">Current Weather Information for Dublin
+                    </th>
+                </tr>
+                
+                <tr>
+                    <td colspan="3"> <img class = "icon" id="icon_" src="" alt="Weather icon">
                     </td>
-                    <td> Humidity <i class="fa fa-tint" style="font-size:36px"></i> 
+                </tr>
+             
+                <tr>
+                    <td>
+                        Main <i class="fa fa-image" style="font-size:36px"></i> 
                     </td>
-                    <td> Wind <span>&#9780;</span>
+                    <td>
+                        Humidity <i class="fa fa-tint" style="font-size:36px"></i> 
+                    </td>
+                    <td>
+                        Wind <span>&#9780;</span>
                     </td>
                 </tr>
                 
                 <tr id = "middle">
                 </tr>
+                
                 <tr id = "middle">
-                                <button id = "morning_weather"><b> 5 Day Morning Forecast</b></button>
+                    
+                    <button class = "btn_wf" id = "morning_weather">
+                        <b>
+                            5 Day Forecast
+                        </b>
+                    </button>
+                    
+                                        
+                    <button class  = "btn_wf" id = "morning_weatherX">
+                        <b>
+                            5 Day Forecast (+ 12 hours)
+                        </b>
+                    </button>
                 </tr>
 
-
-                    
-                     
-                
              </tbody>
              
-             </table>
+        </table>
              
-                     <table id = "wftable">
+    <table table class = "wf_table" id = "wftable">
             <tbody>
                 
-                <tr>
-                    
-                    <th colspan = "10">9am Weather Forecast</th></tr>
+                <tr id = "hd">
+
+                </tr>
                 
+            </tbody>
+    </table>
+             
+        <table table class = "wf_table" id = "wftableX">
+            <tbody>
+                
+                <tr id = "hdX">
+
+                </tr>
                 
             </tbody>
     </table>
@@ -477,43 +558,32 @@ $( "#morning_weather" ).click(function() {
 
             
        
-</div>
-
-
-<!--
-                     <div id = "weather_graph" >
-             <h3> this is where the graph will go</h3>
-             </div>    
--->
-
-
         </div>
+        
+    </div>
     
     <button class = twitter id="hide">Hide Traffic Updates</button>
     <button class = twitter  id="show">Show Traffic Updates</button> 
-            <div id = "twitter_widget">
+    <div id = "twitter_widget">
 
-                <div id = "twitter_box">
+        <div id = "twitter_box">
                  
-             <a class="twitter-timeline" data-height="150px" data-width= "25%" href="https://twitter.com/aaroadwatch?ref_src=twsrc%5Etfw">Tweets by aaroadwatch</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-           </div>  
-        </div>
+            <a class="twitter-timeline" data-height="150px" data-width= "25%" href="https://twitter.com/aaroadwatch?ref_src=twsrc%5Etfw">
+                Tweets by aaroadwatch
+            </a>
+            <script async src="https://platform.twitter.com/widgets.js" charset="utf-8">
+            </script>
+        </div>  
+    </div>
 
 
 
     
    <img id="footer" src = "{{ url_for('static',filename='Images/footer.svg') }}" alt="Footer"> 
-   <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBU1JvWkSvhDQ_HuTNOfF9h7QMehuLRWmA&callback=myMap"> </script>
+    
+   <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBU1JvWkSvhDQ_HuTNOfF9h7QMehuLRWmA&callback=myMap">
+    </script>
     </body>
 </html>
 
 
-<!--<td id ="icon99"><img id="icon99" src="" alt="Weather icon">  </td>-->
-
-
-<!--
-<script src='//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/d3.min.js'></script>
-             <script>window.myWidgetParam ? window.myWidgetParam : window.myWidgetParam = [];  window.myWidgetParam.push({id: 21,cityid: '2964574',appid: '52b3fcc8ca94382baa1747a7dde59108&q=Dublin',units: 'metric',containerid: 'openweathermap-widget-21',  });  (function() {var script = document.createElement('script');script.async = true;script.charset = "utf-8";script.src = "//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/weather-widget-generator.js";var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(script, s);  })();</script>
-
-
--->

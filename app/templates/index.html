@@ -36,32 +36,7 @@
     });
 
     google.charts.load('current', {'packages':['corechart']});
-    //google.charts.setOnLoadCallback(drawChart);  
-    
 
-  
-       
-        //map = new google.maps.Map(mapCanvas, mapOptions);
-  //  	infoWindow = new google.maps.InfoWindow;
-    	// Try HTML5 geolocation.
-//
-  //  	if (navigator.geolocation) {
-    //		navigator.geolocation.getCurrentPosition(function(position) {
-    	//		var pos = {
-    		//		lat: position.coords.latitude,
-    			//	lng: position.coords.longitude
-    		//	};
-   // 			infoWindow.setPosition(pos);
-    //			infoWindow.setContent('Found you!');
-    	//		map.setCenter(myLongitude);
-   // 		}, function() {
-    //			handleLocationError(true, infoWindow, map.getCenter());
-    	//	});
-    //	} else {
-    		// Browser doesn't support Geolocation
-    	//	handleLocationError(false, infoWindow, map.getCenter());
-    	//}
-        
         
 		mapMarkers=[];
         
@@ -213,12 +188,10 @@ else{
      $("<td>" + data.dt + data.hour + data.minutes + "</td>").appendTo("#date");
     $("<tr><td>" + data.name + "</td></tr>").appendTo("#city");
 //     $("<tr><td>" + description +  "</td></tr>").appendTo("#pftable");
-     $("<tr><td>" + main + "</td><td>" + humidity + "%" + "</td><td>" + wind + " m/s" + "</td></tr>").appendTo("#pftable");
+     $("<td>" + description + "</td><td>" + humidity + "%" + "</td><td>" + wind + " m/s" + "</td>").appendTo("#middle");
      
      
-//     $("<tr><td>" + wind + " m/s" + "</td></tr>").appendTo("#pftable");
-//     $("<tr><td>" + humidity + "</td><td>" + humidity + "</td></tr>").appendTo("#pftable");
-     
+
      
              if (main = "Clouds"  && hour <= 20) {
           $('body').css({
@@ -326,44 +299,12 @@ else{
         }
     
 
-     var iconcode = data.weather[0].icon;
-      var iconurl = "http://openweathermap.org/img/w/" + iconcode + ".png";
-  $('#icon_').attr('src', iconurl);
-
+    var iconcode = data.weather[0].icon;
+    var iconurl = "http://openweathermap.org/img/w/" + iconcode + ".png";
+    $('#icon_').attr('src', iconurl);
+    var iconDiv = $("#icon99");
      
-        var iconDiv = $("#icon99");
-     
-     
-
-//     var iconcode = data.weather[0].icon;
-//    var iconurl = "http://openweathermap.org/img/w/" + iconcode + ".png";
-//     $('#wicon').attr('src', iconurl);
-
-     
-console.log(main);
-       switch (main) {
-          case "Rain":
-            iconDiv.toggleClass('rain');
-            break;
-
-          case "Clouds":
-            iconDiv.toggleClass('cloud');
-            break;
-                
-          case "Clear":
-            iconDiv.toggleClass('clear');
-            break;
-        case "Drizzle":
-            iconDiv.toggleClass('rain');
-            break;
-               
-          default:
-            iconDiv.toggleClass('clear');
-      }
-
- });
-    
-$(document).ready(function(){
+     $(document).ready(function(){
     $("#hide").click(function(){
         $("#twitter_widget").hide();
     });
@@ -372,135 +313,89 @@ $(document).ready(function(){
     });
 });
 
+     
+
+ });
+    
+
      $.getJSON("http://api.openweathermap.org/data/2.5/forecast?q=Dublin,ie&appid=52b3fcc8ca94382baa1747a7dde59108", function(data) {
           console.log(data);
          
 
      
      var times = data.list;
-     var day1 = times[0];
+     var day1 = times[3];
      var day1Time = day1.dt
      var day1Icon = day1.weather[0].icon;
      
-          var day2 = times[7];
+    var day2 = times[11];
      var day2Time = day2.dt
      var day2Icon = day2.weather[0].icon;
      
-        var day3 = times[15];
+    var day3 = times[19];
      var day3Time = day3.dt
      var day3Icon = day3.weather[0].icon;
      
-          var day4 = times[23];
+    var day4 = times[27];
      var day4Time = day4.dt
      var day4Icon = day4.weather[0].icon;
      
-    var day5 = times[31];
+    var day5 = times[35];
      var day5Time = day5.dt
-
-     var day5Icon = day5.weather[0].icon;
+var day5Icon = day5.weather[0].icon;
          
-         
-   var times = [day1Time, day2Time, day3Time]
-
-         {array of times}
-         {array of icons}
-         indexing will be the same
-         
-         format_time = {}
-         
-         for int i = 0, i < time.lenght
-         
+var times = [day1Time, day2Time, day3Time, day4Time, day5Time];
+var icons = [day1Icon, day2Icon, day3Icon, day4Icon, day5Icon]
 var weekday=new Array("Sun","Mon","Tue","Wed","Thu","Fri","Sat");
-
 var monthname=new Array("Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec");
 
-         
-var pubDate = new Date( day1Time* 1000); //exp
-var formattedDate = weekday[pubDate.getDay()] + ' '
-  + monthname[pubDate.getMonth()] + ' '
-  + pubDate.getDate()
-console.log(formattedDate)
-         
-var pubDate2 = new Date( day2Time* 1000); //exp
-var formattedDate2 = weekday[pubDate2.getDay()] + ' '
-  + monthname[pubDate2.getMonth()] + ' '
-  + pubDate2.getDate()
-console.log(formattedDate2)
 
-var pubDate3 = new Date( day3Time* 1000);
-var formattedDate3 = weekday[pubDate3.getDay()] + ' '
-  + monthname[pubDate3.getMonth()] + ' '
-  + pubDate3.getDate()
-console.log(formattedDate3)
-
-var pubDate4 = new Date( day4Time* 1000);
-var formattedDate4 = weekday[pubDate4.getDay()] + ' '
-  + monthname[pubDate4.getMonth()] + ' '
-  + pubDate4.getDate()
-console.log(formattedDate4)
-
-var pubDate5 = new Date( day5Time* 1000);
-var formattedDate5 = weekday[pubDate5.getDay()] + ' '
-  + monthname[pubDate5.getMonth()] + ' '
-  + pubDate5.getDate()
-console.log(formattedDate5)
-         
-         
-     
-         
-     
+   var format_time = []
+   var html = "";       
+   var format_time = []
    
-   
-
- var iconurl1 = "http://openweathermap.org/img/w/" + day1Icon + ".png";
-  $('#icon_day1').attr('src', iconurl1);
-     
- var iconurl2 = "http://openweathermap.org/img/w/" + day2Icon + ".png";
-  $('#icon_day2').attr('src', iconurl2);
-     
-     var iconurl3 = "http://openweathermap.org/img/w/" + day3Icon + ".png";
-  $('#icon_day3').attr('src', iconurl3);
-     
-     var iconurl4 = "http://openweathermap.org/img/w/" + day4Icon + ".png";
-  $('#icon_day4').attr('src', iconurl4);
-     
-      var iconurl5 = "http://openweathermap.org/img/w/" + day5Icon + ".png";
-  $('#icon_day5').attr('src', iconurl5);
-
-     
-
-     
-     
-     
-    $("<tr><td>" + formattedDate + "</td></tr>").appendTo("#day1");
-     $("<tr><td>" + formattedDate2 + "</td></tr>").appendTo("#day2");
-     $("<tr><td>" + formattedDate3 + "</td></tr>").appendTo("#day3");
-     $("<tr><td>" + formattedDate4 + "</td></tr>").appendTo("#day4");
-     $("<tr><td>" + formattedDate5 + "</td></tr>").appendTo("#day5");
+   for (var i = 0; i < times.length; i++)
+       
+       {
+           var date = new Date(times[i]*1000);
+           var formattedDate = weekday[date.getDay()] + ' '+ monthname[date.getMonth()] + ' '+ date.getDate();
+           
+           format_time[i] = formattedDate
+           console.log(formattedDate)
+           
+           
+       }
+         var html = "<tr>";
+         var html2 = "<tr>";
+         for (var i = 0; i < format_time.length; i++)
+             
+             {
+                 html += "<td id =day" + i + ">" + format_time[i] + "</td>"
+                 html += "<td><img id =icon" + i + " src = http://openweathermap.org/img/w/" + icons[i] + ".png></img></td>"
+                 }
+         html += "</tr>"
+         html2 += "</tr>"
          
-$(document).ready(
-    function(){
-        $("#more_weather").click(function () {
-            $("#wftable").show("slow");
-        });
-
-    });
+         console.log(html)
          
-$(document).ready(
-    function(){
-        $("#more_weather").click(function () {
-            $("#wftable").toggle();
-        });
-    });
+         $(html).appendTo("#wftable")
+         $(html2).appendTo("#wftable")
 
-})
 
-        
+         
+
+$( "#morning_weather" ).click(function() {
+  $( "#wftable" ).slideToggle( "fast" );
+});
+
+   });     
 </script>
 
 <script>function displayDiv() {
    document.getElementById('weather_container').style.display = "block";
 }</script>
+    
+    
 	
     <!--  https://www.w3schools.com/graphics/google_maps_basic.asp  -->
     <div class="container">
@@ -515,7 +410,7 @@ $(document).ready(
     
     <div id = weather_container>
         
-        <h3 id = "header" class = centreFlex>Just Eat Weather Information <i style="font-size:60px" class="fa">&#xf206;</i> </h3>
+        <h3 id = "header">Just Eat Weather Information <i style="font-size:60px" class="fa">&#xf206;</i> </h3>
         
          <div id = "weather_info">
              
@@ -527,14 +422,17 @@ $(document).ready(
                 </div>
             </div>
              
+             
+             
 
 
          <table id = "pftable" class = "wrapper">
             <tbody>
+                <tr> <th colspan="3">Current Weather Information for Dublin</th></tr>
 <!--                <caption id = "icon99" class = "icon99"></caption>-->
-            <tr><td></td>
-       <td> <img class = "icon" id="icon_" src="" alt="Weather icon"> </td>
-                <td><button id = "more_weather"> 5 Day!</button></td>
+            <tr>
+       <td colspan="3"> <img class = "icon" id="icon_" src="" alt="Weather icon"> </td>
+                
               
                
             </tr>
@@ -550,26 +448,27 @@ $(document).ready(
                     </td>
                 </tr>
                 
+                <tr id = "middle">
+                </tr>
+                <tr id = "middle">
+                                <button id = "morning_weather"><b> 5 Day Morning Forecast</b></button>
+                </tr>
+
+
+                    
+                     
+                
              </tbody>
              
              </table>
              
                      <table id = "wftable">
             <tbody>
-                <tr ><td> <img class = "icon" id="icon_day1" src="" alt="Weather icon"> </td></tr>
-                <tr class ="day"><td id = "day1"></td></tr>
                 
-                <tr class ="icon"><td> <img id="icon_day2" src="" alt="Weather icon"> </td></tr>
-                <tr class ="day"><td id = "day2" ></td></tr>
+                <tr>
+                    
+                    <th colspan = "10">9am Weather Forecast</th></tr>
                 
-                <tr class ="icon"><td> <img id="icon_day3" src="" alt="Weather icon"> </td></tr>
-                <tr class ="day"><td id = "day3"></td></tr>
-                
-                <tr class ="icon"><td> <img id="icon_day4" src="" alt="Weather icon"> </td></tr>
-                <tr class ="day"><td id = "day4"></td></tr>
-                
-                <tr class ="icon"><td> <img id="icon_day5" src="" alt="Weather icon"> </td></tr>
-                <tr class ="day"><td id = "day5"></td></tr>
                 
             </tbody>
     </table>

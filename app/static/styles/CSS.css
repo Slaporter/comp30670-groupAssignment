@@ -209,19 +209,10 @@ h3 { color: white;
 .Outerbutton {
 width:20%;
 height: 200px;
-<<<<<<< HEAD
 margin-bottom:2%;
 margin-right: 30%;
 margin-left: 30%;
-margin-bottom:5%;
-margin-right: 0;   
-=======
-margin-left:%;
-margin-bottom:5%;
-margin-right: 0;
-
-    
->>>>>>> 6f963cc2aa4543746e1629c302731e3583ec56ba
+  
 }
 
 .Innerbutton
@@ -370,7 +361,6 @@ button.twitter{
     margin-bottom: 2%;
     color: white;
     border-radius: 0%;
-<<<<<<< HEAD
     font-size: 20px;
     cursor: help;   
 }
@@ -384,8 +374,5 @@ button.twitter{
     width: 120px;
 }
 
-=======
 
-
-/*>>>>>>> 6f963cc2aa4543746e1629c302731e3583ec56ba*/
 

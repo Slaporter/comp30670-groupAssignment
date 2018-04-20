@@ -153,3 +153,5 @@ def run():
     return
 
 run()
+
+#Reference: https://dev.mysql.com/doc/connector-python/en/connector-python-example-connecting.html

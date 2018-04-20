@@ -59,7 +59,7 @@
 	        if (view==0){
 	        	if ({{ stop[4] }} == 0){
 	        		markerColour = "red";
-	        	} else if ({{ stop[4] }}/({{stop [5] }} + {{stop[4]}}) <0.9){
+	        	} else if ({{ stop[4] }}/({{stop [5] }} + {{stop[4]}}) <0.1){
 	        		markerColour = "orange";
 	        	}else
 	        		markerColour = "green";
@@ -67,7 +67,7 @@
 	        else{
 	        	if ({{ stop[5] }} == 0){
 	        		markerColour="red";
-	        	} else if ({{ stop[5] }}/({{stop[4] }} + {{stop[5]}}) <0.9){
+	        	} else if ({{ stop[5] }}/({{stop[4] }} + {{stop[5]}}) <0.1){
 	        		markerColour = "orange";
 	        	}else
 	        		markerColour="green";
@@ -95,7 +95,7 @@
 	                          };
 	
 	                  var node = document.createElement('div');
-	                  var html = "<div>"+ "<a href = 'charts'>"+
+	                  var html = "<div>"+ "<a href = 'prediction'>"+
 	                  "<input type='button' value='Try Out Our Prediction!'/>"+"</a>"+ 
 	                  "<a href = 'directions'>"+"<input type = 'button' value='Need Directions?'/>"+"</a>"+"</div>";
 	                  infoWindow = new google.maps.InfoWindow();
@@ -587,3 +587,18 @@ $( "#morning_weatherX" ).click(function() {
 </html>
 
 
+<<<<<<< HEAD
+=======
+<!--<td id ="icon99"><img id="icon99" src="" alt="Weather icon">  </td>-->
+
+
+<!--
+<script src='//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/d3.min.js'></script>
+             <script>window.myWidgetParam ? window.myWidgetParam : window.myWidgetParam = [];  window.myWidgetParam.push({id: 21,cityid: '2964574',appid: '52b3fcc8ca94382baa1747a7dde59108&q=Dublin',units: 'metric',containerid: 'openweathermap-widget-21',  });  (function() {var script = document.createElement('script');script.async = true;script.charset = "utf-8";script.src = "//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/weather-widget-generator.js";var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(script, s);  })();</script>
+
+References: 
+https://developers.google.com/maps/documentation/javascript/examples/infowindow-simple
+https://developers.google.com/maps/documentation/android-api/marker
+https://google-developers.appspot.com/chart/interactive/docs/gallery/piechart
+-->
+>>>>>>> 6f963cc2aa4543746e1629c302731e3583ec56ba

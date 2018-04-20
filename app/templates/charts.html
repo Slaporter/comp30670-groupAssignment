@@ -11,6 +11,7 @@
 
 <body>
  
+ <div class="btn" id="predict_form">
   <form id="predict_form" method='get'>
   	<select id="day" name='day'>
   		<option>Select a day</option>
@@ -72,15 +73,17 @@
   		<option value=15>13</option>
   	</select>
   	<input type='submit'>
-  </form>
+  </form></div>
   
  <script type="text/javascript">
 
  
 {% if prediction %}
-var name = "value of variable: {{ prediction }}";
+var days = ["Monday","Tuesay","Wednesday","Thursday","Friday","Saturday","Sunday"]
+var stopnum=parseInt("{{ stopnumber }}")
+var name = "You selected <br> Day: "+days["{{ day }}"]+" <br> Time: {{ time }}:00 <br> Stop: {{ infos[stopnumber-1][2] }} <br> Our prediction is: {{ prediction }} avaible bikes";
 window.onload = function print(){
-document.getElementById("display").innerHTML = {{ prediction }};
+document.getElementById("display").innerHTML = name;
 };
 {% else %}
     "Hi"
@@ -100,6 +103,8 @@ select.add(option);
 </script>
 
   <p id="display"></p>
+     <img id="footer" src = "{{ url_for('static',filename='Images/footer.svg') }}" alt="Footer"> 
+  
   
   </body>
 </html>

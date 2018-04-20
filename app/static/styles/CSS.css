@@ -62,6 +62,13 @@ body {
 	display: inline;
 	text-decoration: none;
 }
+
+#predict_form{
+	left:50%;
+	display: inline;
+	font-size: 20px;	
+}
+
  .btn:hover {
   background-color: #555;
 }
@@ -183,6 +190,7 @@ h3 { color: white;
 .Outerbutton {
 width:20%;
 height: 200px;
+<<<<<<< HEAD
 margin-bottom:2%;
 margin-right: 30%;
 margin-left: 30%;
@@ -192,6 +200,11 @@ margin-left: 30%;
     
 
 
+=======
+margin-left:%;
+margin-bottom:5%;
+margin-right: 0;
+>>>>>>> 802cd0a5716b4091d9803ccc900bf089b88165f0
     
 }
 
@@ -370,6 +383,7 @@ button.twitter{
 }
 
 
+<<<<<<< HEAD
 
 #icon_{
     height:120px;
@@ -379,3 +393,5 @@ button.twitter{
 th{
     text-align: center;
 }
+=======
+>>>>>>> 802cd0a5716b4091d9803ccc900bf089b88165f0

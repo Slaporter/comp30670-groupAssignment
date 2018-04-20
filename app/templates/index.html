@@ -59,7 +59,7 @@
 	        if (view==0){
 	        	if ({{ stop[4] }} == 0){
 	        		markerColour = "red";
-	        	} else if ({{ stop[4] }}/({{stop [5] }} + {{stop[4]}}) <0.9){
+	        	} else if ({{ stop[4] }}/({{stop [5] }} + {{stop[4]}}) <0.1){
 	        		markerColour = "orange";
 	        	}else
 	        		markerColour = "green";
@@ -67,7 +67,7 @@
 	        else{
 	        	if ({{ stop[5] }} == 0){
 	        		markerColour="red";
-	        	} else if ({{ stop[5] }}/({{stop[4] }} + {{stop[5]}}) <0.9){
+	        	} else if ({{ stop[5] }}/({{stop[4] }} + {{stop[5]}}) <0.1){
 	        		markerColour = "orange";
 	        	}else
 	        		markerColour="green";
@@ -515,5 +515,8 @@ $( "#morning_weather" ).click(function() {
 <script src='//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/d3.min.js'></script>
              <script>window.myWidgetParam ? window.myWidgetParam : window.myWidgetParam = [];  window.myWidgetParam.push({id: 21,cityid: '2964574',appid: '52b3fcc8ca94382baa1747a7dde59108&q=Dublin',units: 'metric',containerid: 'openweathermap-widget-21',  });  (function() {var script = document.createElement('script');script.async = true;script.charset = "utf-8";script.src = "//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/weather-widget-generator.js";var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(script, s);  })();</script>
 
-
+References: 
+https://developers.google.com/maps/documentation/javascript/examples/infowindow-simple
+https://developers.google.com/maps/documentation/android-api/marker
+https://google-developers.appspot.com/chart/interactive/docs/gallery/piechart
 -->

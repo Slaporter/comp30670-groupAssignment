@@ -12,7 +12,6 @@ import pandas as pd
 import pickle
 from sklearn.ensemble import RandomForestRegressor
 import scipy
-from sklearn.externals import joblib
 from calendar import day_abbr
 
 
